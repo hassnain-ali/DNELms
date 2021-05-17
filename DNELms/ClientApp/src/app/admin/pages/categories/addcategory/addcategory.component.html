@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-xl-7">
+        <mat-progress-bar mode="query" *ngIf="IsSubmitting"></mat-progress-bar>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    Category
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Add new Category or update
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <form (ngSubmit)="SaveCategory()" [formGroup]="CategoryForm">
+                    <input type="hidden" formControlName="Id" />
+                    <div class="form-group">
+                        <mat-form-field class="full-length">
+                            <mat-label>Category Name</mat-label>
+                            <input matInput formControlName="Name">
+                        </mat-form-field>
+                        <mat-error *ngIf="!CategoryForm.controls.Name.valid">
+                            {{GetRequiredMessage(CategoryForm.controls.Name)}}</mat-error>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field class="full-length">
+                            <mat-label>Parent Category</mat-label>
+                            <mat-select formControlName="ParentId">
+                                <mat-option>None</mat-option>
+                                <mat-option *ngFor="let category of Categries" [value]="category">{{category}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-error *ngIf="!CategoryForm.controls.ParentId.valid">
+                            {{GetRequiredMessage(CategoryForm.controls.ParentId)}}</mat-error>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field class="full-length">
+                            <mat-label>Published?</mat-label>
+                            <mat-select formControlName="IsActive">
+                                <mat-option value="true">Yes! </mat-option>
+                                <mat-option value="false">No! </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-error *ngIf="!CategoryForm.controls.IsActive.valid">
+                            {{GetRequiredMessage(CategoryForm.controls.IsActive)}}</mat-error>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field class="full-length">
+                            <ngx-mat-file-input formControlName="SmallImage" accept="image/*" placeholder="Thumbnail">
+                            </ngx-mat-file-input>
+                            <mat-icon matSuffix>folder</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field class="full-length">
+                            <ngx-mat-file-input formControlName="BannerImage" accept="image/*"
+                                placeholder="Large Image">
+                            </ngx-mat-file-input>
+                            <mat-icon matSuffix>folder</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div class="col">
+                            <a type="submit" class="float-left" routerLink="/admin/category-list" mat-raised-button
+                                color="warn" *ngIf="!IsSubmitting">
+                                <mat-icon>arrow_back</mat-icon>
+                                <span> Back To List</span>
+                            </a>
+                            <a type="submit" class="float-left" mat-raised-button color="warn" *ngIf="IsSubmitting"
+                                [disabled]="IsSubmitting">
+                                <mat-icon>arrow_back</mat-icon>
+                                <span> Back To List</span>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="float-right" mat-raised-button color="primary"
+                                [disabled]="!CategoryForm.valid||IsSubmitting">
+                                <mat-icon *ngIf="!IsSubmitting">done_all</mat-icon>
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

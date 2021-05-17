@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CourseExtRepo\" />
+    <Folder Include="CoursesRepo\" />
+    <Folder Include="WorldRepo\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DNELms.DBContexts\DNELms.DBContexts.csproj" />
+    <ProjectReference Include="..\DNELms.ModelMapper\DNELms.ModelMapper.csproj" />
+  </ItemGroup>
+
+</Project>

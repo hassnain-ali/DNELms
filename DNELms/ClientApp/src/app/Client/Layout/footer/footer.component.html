@@ -1,0 +1,37 @@
+<footer class="footer-area d-print-none">
+  <div class="container-xl">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="copyright-text">
+          <a routerLink="/">
+            <img src="https://cdn.sapvcpanel.com/uploads/system/logo-dark.png" alt="" class="d-inline-block" width="110">
+          </a>
+          <a routerLink="/"></a>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <ul class="nav justify-content-md-end footer-menu">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">Privacy policy</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/">Terms and condition</a>
+          </li>
+          <li class="nav-item" *ngIf="!(isAuthenticated | async)">
+            <a class="nav-link" routerLink="/authentication/login">
+              Login
+            </a>
+          </li>
+          <li class="nav-item" *ngIf="isAuthenticated | async">
+            <a class="nav-link" routerLink="/authentication/logout" [state]='{ local: true }'>
+              Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>

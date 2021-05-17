@@ -1,0 +1,861 @@
+<section class="category-header-area">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="https://cdn.sapvcpanel.com/home.html"><i
+                                    class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item">
+                            <a routerLink="#">
+                                Courses </a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            All category </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="category-course-list-area">
+    <div class="container">
+        <div class="category-filter-box filter-box clearfix">
+            <span>Showing on this page : 6</span>
+            <a routerLink="javascript::" onclick="toggleLayout('grid')"
+                style="float: right; font-size: 19px; margin-left: 5px;"><i class="fas fa-th"></i></a>
+            <a routerLink="javascript::" onclick="toggleLayout('list')" style="float: right; font-size: 19px;"><i
+                    class="fas fa-th-list"></i></a>
+            <a routerLink="../courses.html" style="float: right; font-size: 19px; margin-right: 5px;"><i
+                    class="fas fa-sync-alt"></i></a>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 filter-area">
+                <div class="card">
+                    <a routerLink="javascript::" style="color: unset;">
+                        <div class="card-header filter-card-header" id="headingOne" data-toggle="collapse"
+                            data-target="#collapseFilter" aria-expanded="true" aria-controls="collapseFilter">
+                            <h6 class="mb-0">
+                                Filter <i class="fas fa-sliders-h" style="float: right;"></i>
+                            </h6>
+                        </div>
+                    </a>
+                    <div id="collapseFilter" class="collapse show" aria-labelledby="headingOne"
+                        data-parent="#accordion">
+                        <div class="card-body pt-0">
+                            <div class="filter_type">
+                                <h6>Categories</h6>
+                                <ul>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="category_all" name="sub_category"
+                                                class="categories custom-radio" value="all" onclick="filter(this)"
+                                                checked>
+                                            <label for="category_all">All category</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="">
+                                            <input type="radio" id="category-10" name="sub_category"
+                                                class="categories custom-radio" value="web-design"
+                                                onclick="filter(this)">
+                                            <label for="category-10">Web Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-11" name="sub_category"
+                                                class="categories custom-radio" value="responsive-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-11">Responsive Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-12" name="sub_category"
+                                                class="categories custom-radio" value="wordpress-theme"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-12">WordPress Theme</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-19" name="sub_category"
+                                                class="categories custom-radio" value="bootstrap"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-19">Bootstrap</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-28" name="sub_category"
+                                                class="categories custom-radio" value="html-amp-css"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-28">HTML &amp; CSS</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="">
+                                            <input type="radio" id="category-13" name="sub_category"
+                                                class="categories custom-radio" value="graphic-design"
+                                                onclick="filter(this)">
+                                            <label for="category-13">Graphic Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-17" name="sub_category"
+                                                class="categories custom-radio" value="photoshop"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-17">Photoshop</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-18" name="sub_category"
+                                                class="categories custom-radio" value="adobe-illustrator"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-18">Adobe Illustrator</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-29" name="sub_category"
+                                                class="categories custom-radio" value="drawing" onclick="filter(this)">
+                                            <label for="sub_category-29">Drawing</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-30" name="sub_category"
+                                                class="categories custom-radio" value="logo-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-30">Logo Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class="">
+                                            <input type="radio" id="sub_category-31" name="sub_category"
+                                                class="categories custom-radio" value="digital-art"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-31">Digital Art</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="">
+                                            <input type="radio" id="category-14" name="sub_category"
+                                                class="categories custom-radio" value="user-experience"
+                                                onclick="filter(this)">
+                                            <label for="category-14">User Experience</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-20" name="sub_category"
+                                                class="categories custom-radio" value="user-experience-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-20">User Experience Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-21" name="sub_category"
+                                                class="categories custom-radio" value="mobile-app-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-21">Mobile App Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-32" name="sub_category"
+                                                class="categories custom-radio" value="user-interface"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-32">User Interface</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-33" name="sub_category"
+                                                class="categories custom-radio" value="design-thinking"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-33">Design Thinking</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-34" name="sub_category"
+                                                class="categories custom-radio" value="figma" onclick="filter(this)">
+                                            <label for="sub_category-34">Figma</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-35" name="sub_category"
+                                                class="categories custom-radio" value="prototyping"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-35">Prototyping</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="category-15" name="sub_category"
+                                                class="categories custom-radio" value="interior-design"
+                                                onclick="filter(this)">
+                                            <label for="category-15">Interior Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-22" name="sub_category"
+                                                class="categories custom-radio" value="color-theory"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-22">Color Theory</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-23" name="sub_category"
+                                                class="categories custom-radio" value="lighting-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-23">Lighting Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-40" name="sub_category"
+                                                class="categories custom-radio" value="sketchup" onclick="filter(this)">
+                                            <label for="sub_category-40">SketchUp</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-41" name="sub_category"
+                                                class="categories custom-radio" value="home-improvement"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-41">Home Improvement</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-42" name="sub_category"
+                                                class="categories custom-radio" value="3d-lighting"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-42">3D Lighting</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="category-16" name="sub_category"
+                                                class="categories custom-radio" value="3d-and-animation"
+                                                onclick="filter(this)">
+                                            <label for="category-16">3D and Animation</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-24" name="sub_category"
+                                                class="categories custom-radio" value="blender" onclick="filter(this)">
+                                            <label for="sub_category-24">Blender</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-25" name="sub_category"
+                                                class="categories custom-radio" value="motion-graphics"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-25">Motion Graphics</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-36" name="sub_category"
+                                                class="categories custom-radio" value="after-effects"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-36">After Effects</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-37" name="sub_category"
+                                                class="categories custom-radio" value="maya" onclick="filter(this)">
+                                            <label for="sub_category-37">Maya</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-38" name="sub_category"
+                                                class="categories custom-radio" value="zbrush" onclick="filter(this)">
+                                            <label for="sub_category-38">zBrush</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-39" name="sub_category"
+                                                class="categories custom-radio" value="character-modeling"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-39">Character Modeling</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="category-27" name="sub_category"
+                                                class="categories custom-radio" value="fashion" onclick="filter(this)">
+                                            <label for="category-27">Fashion</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-43" name="sub_category"
+                                                class="categories custom-radio" value="fashion-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-43">Fashion Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-44" name="sub_category"
+                                                class="categories custom-radio" value="sewing" onclick="filter(this)">
+                                            <label for="sub_category-44">Sewing</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-45" name="sub_category"
+                                                class="categories custom-radio" value="t-shirt-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-45">T-shirt Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="ml-2">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="sub_category-46" name="sub_category"
+                                                class="categories custom-radio" value="jewelry-design"
+                                                onclick="filter(this)">
+                                            <label for="sub_category-46">Jewelry Design</label>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class=" hidden-categories hidden ">
+                                            <input type="radio" id="category-51" name="sub_category"
+                                                class="categories custom-radio" value="frontend-development-with-vue-js"
+                                                onclick="filter(this)">
+                                            <label for="category-51">Frontend Development With Vue.js</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a routerLink="javascript::" id="city-toggle-btn"
+                                    onclick="showToggle(this, 'hidden-categories')" style="font-size: 12px;">Show
+                                    more</a>
+                            </div>
+                            <hr>
+                            <div class="filter_type">
+                                <div class="form-group">
+                                    <h6>Price</h6>
+                                    <ul>
+                                        <li>
+                                            <div class="">
+                                                <input type="radio" id="price_all" name="price"
+                                                    class="prices custom-radio" value="all" onclick="filter(this)"
+                                                    checked>
+                                                <label for="price_all">All</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="radio" id="price_free" name="price"
+                                                    class="prices custom-radio" value="free" onclick="filter(this)">
+                                                <label for="price_free">Free</label>
+                                            </div>
+                                            <div class="">
+                                                <input type="radio" id="price_paid" name="price"
+                                                    class="prices custom-radio" value="paid" onclick="filter(this)">
+                                                <label for="price_paid">Paid</label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="filter_type">
+                                <h6>Level</h6>
+                                <ul>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="all" name="level" class="level custom-radio"
+                                                value="all" onclick="filter(this)" checked>
+                                            <label for="all">All</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="radio" id="beginner" name="level" class="level custom-radio"
+                                                value="beginner" onclick="filter(this)">
+                                            <label for="beginner">Beginner</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="radio" id="advanced" name="level" class="level custom-radio"
+                                                value="advanced" onclick="filter(this)">
+                                            <label for="advanced">Advanced</label>
+                                        </div>
+                                        <div class="">
+                                            <input type="radio" id="intermediate" name="level"
+                                                class="level custom-radio" value="intermediate" onclick="filter(this)">
+                                            <label for="intermediate">Intermediate</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="filter_type">
+                                <h6>Language</h6>
+                                <ul>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="all_language" name="language"
+                                                class="languages custom-radio" value="all" onclick="filter(this)"
+                                                checked>
+                                            <label for="all_language">All</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="language_english" name="language"
+                                                class="languages custom-radio" value="english" onclick="filter(this)">
+                                            <label for="language_english">English</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="filter_type">
+                                <h6>Ratings</h6>
+                                <ul>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="all_rating" name="rating"
+                                                class="ratings custom-radio" value="all" onclick="filter(this)" checked>
+                                            <label for="all_rating">All</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="rating_1" name="rating" class="ratings custom-radio"
+                                                value="1" onclick="filter(this)">
+                                            <label for="rating_1">
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="rating_2" name="rating" class="ratings custom-radio"
+                                                value="2" onclick="filter(this)">
+                                            <label for="rating_2">
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="rating_3" name="rating" class="ratings custom-radio"
+                                                value="3" onclick="filter(this)">
+                                            <label for="rating_3">
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="rating_4" name="rating" class="ratings custom-radio"
+                                                value="4" onclick="filter(this)">
+                                            <label for="rating_4">
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="far fa-star" style="color: #dedfe0;"></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="">
+                                            <input type="radio" id="rating_5" name="rating" class="ratings custom-radio"
+                                                value="5" onclick="filter(this)">
+                                            <label for="rating_5">
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                                <i class="fas fa-star" style="color: #f4c150;"></i>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="category-course-list">
+                    <ul>
+
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a routerLink="../course/wordpress-theme-development-with-bootstrap/12.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_12.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/wordpress-theme-development-with-bootstrap/12.html"
+                                        class="course-title">WordPress Theme Development with Bootstrap</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Learn how to confidently develop custom & profitable Responsive WordPress Themes
+                                        and Websites with no prior experience. </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            22 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            23:47:22 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">$10</span>
+                                        <span class="original-price">$11.99</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">4</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        2 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a routerLink="../course/adobe-illustrator-cc-essentials-training-course/13.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_13.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/adobe-illustrator-cc-essentials-training-course/13.html"
+                                        class="course-title">Adobe Illustrator CC - Essentials Training Course</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Learn Adobe Illustrator CC graphic design, logo design, and more with this
+                                        in-depth, practical, easy-to-follow course! </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            12 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            01:31:12 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Advanced</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">$12</span>
+                                        <span class="original-price">$18.99</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">0</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        0 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a
+                                        routerLink="../course/supreme-photoshop-training-from-beginner-to-expert/14.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_14.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/supreme-photoshop-training-from-beginner-to-expert/14.html"
+                                        class="course-title">Supreme Photoshop Training: From Beginner to Expert</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Supreme Photoshop Training - Become an expert in Photoshop with no experience or
+                                        prior knowledge - Anyone can do it </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            12 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            01:50:56 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Beginner</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">Free</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">4</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        1 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a
+                                        routerLink="../course/user-experience-design-essentials-adobe-xd-ui-ux-design/15.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_15.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/user-experience-design-essentials-adobe-xd-ui-ux-design/15.html"
+                                        class="course-title">User Experience Design Essentials - Adobe XD UI UX
+                                        Design</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Use XD to get a job in UI Design, User Interface, User Experience design, UX
+                                        design & Web Design </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            10 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            01:22:18 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Beginner</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">$12</span>
+                                        <span class="original-price">$59.99</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star filled"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">2</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        1 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a routerLink="../course/how-to-use-color-like-a-pro/16.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_16.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/how-to-use-color-like-a-pro/16.html"
+                                        class="course-title">How to
+                                        Use Color Like a Pro</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Interior Design Color Schemes Made Easy </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            7 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            01:15:34 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Beginner</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">$12</span>
+                                        <span class="original-price">$149.99</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">0</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        0 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="course-box-2">
+                                <div class="course-image">
+                                    <a
+                                        routerLink="../course/complete-blender-creator-learn-3d-modelling-for-beginners/17.html">
+                                        <img src="https://cdn.sapvcpanel.com/uploads/thumbnails/course_thumbnails/course_thumbnail_default_17.jpg"
+                                            alt="" class="img-fluid">
+                                    </a>
+                                </div>
+                                <div class="course-details">
+                                    <a routerLink="../course/complete-blender-creator-learn-3d-modelling-for-beginners/17.html"
+                                        class="course-title">Complete Blender Creator: Learn 3D Modelling for
+                                        Beginners</a>
+                                    <a routerLink="../instructor_page/1.html" class="course-instructor">
+                                        <span class="instructor-name">John Doe</span> -
+                                    </a>
+                                    <div class="course-subtitle">
+                                        Use Blender to create beautiful 3D models for video games, 3D printing, house
+                                        design etc. No prior knowledge required. </div>
+                                    <div class="course-meta">
+                                        <span class=""><i class="fas fa-play-circle"></i>
+                                            6 Lessons </span>
+                                        <span class=""><i class="far fa-clock"></i>
+                                            01:29:57 Hours </span>
+                                        <span class=""><i class="fas fa-closed-captioning"></i>English</span>
+                                        <span class=""><i class="fa fa-level-up"></i>Intermediate</span>
+                                    </div>
+                                </div>
+                                <div class="course-price-rating">
+                                    <div class="course-price">
+                                        <span class="current-price">Free</span>
+                                    </div>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <span class="d-inline-block average-rating">0</span>
+                                    </div>
+                                    <div class="rating-number">
+                                        0 Ratings </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item active disabled"> <span class="page-link">1</span></li>
+                        <li class="page-item"><a routerLink="6.html" data-ci-pagination-page="2">2</a></li>
+                        <li class="page-item"><a routerLink="6.html" data-ci-pagination-page="2" rel="next"><i
+                                    class="fas fa-chevron-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    function get_url() {
+        var urlPrefix = '../coursesd41d.html?'
+        var urlSuffix = "";
+        var slectedCategory = "";
+        var selectedPrice = "";
+        var selectedLevel = "";
+        var selectedLanguage = "";
+        var selectedRating = "";
+
+        // Get selected category
+        $('.categories:checked').each(function () {
+            slectedCategory = $(this).attr('value');
+        });
+
+        // Get selected price
+        $('.prices:checked').each(function () {
+            selectedPrice = $(this).attr('value');
+        });
+
+        // Get selected difficulty Level
+        $('.level:checked').each(function () {
+            selectedLevel = $(this).attr('value');
+        });
+
+        // Get selected difficulty Level
+        $('.languages:checked').each(function () {
+            selectedLanguage = $(this).attr('value');
+        });
+
+        // Get selected rating
+        $('.ratings:checked').each(function () {
+            selectedRating = $(this).attr('value');
+        });
+
+        urlSuffix = "category=" + slectedCategory + "&&price=" + selectedPrice + "&&level=" + selectedLevel + "&&language=" + selectedLanguage + "&&rating=" + selectedRating;
+        var url = urlPrefix + urlSuffix;
+        return url;
+    }
+    function filter() {
+        var url = get_url();
+        window.location.replace(url);
+        //console.log(url);
+    }
+
+    //function toggleLayout(layout) {
+    //    $.ajax({
+    //        type: 'POST',
+    //        url: 'https://demo.academy-lms.com/default/home/set_layout_to_session',
+    //        data: { layout: layout },
+    //        success: function (response) {
+    //            location.reload();
+    //        }
+    //    });
+    //}
+
+    function showToggle(elem, selector) {
+        $('.' + selector).slideToggle(20);
+        if ($(elem).text() === "Show more") {
+            $(elem).text('Show less');
+        }
+        else {
+            $(elem).text('Show more');
+        }
+    }
+</script>

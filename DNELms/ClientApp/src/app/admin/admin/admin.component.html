@@ -1,0 +1,238 @@
+<!-- <admin-header></admin-header>
+    <router-outlet></router-outlet>
+    <admin-footer></admin-footer> -->
+<mat-progress-bar mode="indeterminate" *ngIf="IsLoading"></mat-progress-bar>
+<mat-toolbar class="mat-elevation-z8">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="sidenav.toggle()" style="cursor: pointer;">
+            <mat-icon *ngIf="!sidenav.opened">
+                menu
+            </mat-icon>
+            <mat-icon *ngIf="sidenav.opened">
+                close
+            </mat-icon>
+        </button>
+        <p class="tool-title" title="Development Network for Education">D.N.E Admin</p>
+        <span class="spacer"></span>
+        <button mat-icon-button [matMenuTriggerFor]="quickActions" matTooltip="Actions">
+            <mat-icon>apps</mat-icon>
+        </button>
+        <mat-menu #quickActions="matMenu">
+            <button mat-menu-item>
+                <mat-icon class="mr">published_with_changes</mat-icon>
+                Restart Domain
+            </button>
+            <button mat-menu-item>
+                <mat-icon class="mr">clear</mat-icon>
+                Clear Cache
+            </button>
+            <a mat-menu-item routerLink="/">
+                <mat-icon class="mr">travel_explore</mat-icon>
+                Public Store
+            </a>
+            <a mat-menu-item>
+                <mat-icon class="mr">school</mat-icon>
+                Academies
+            </a>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="dropMenu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #dropMenu="matMenu">
+            <button mat-menu-item>
+                <mat-icon class="mr">manage_accounts</mat-icon>
+                Profile
+            </button>
+            <button mat-menu-item>
+                <mat-icon class="mr">logout</mat-icon>
+                Logout
+            </button>
+        </mat-menu>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+        <perfect-scrollbar *ngIf="type === 'component'" #perfectScroll class="scroll-container" fxFlex="auto"
+            [config]="config">
+            <!-- [scrollIndicators]="true" -->
+            <div class="scrollable-content">
+                <div class="d-flex">
+                    <div class="col-3">
+                        <img class="avatar mat-elevation-z8" style="text-align: center"
+                            src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+                    </div>
+                    <div class="col-9">
+                        <h4 class="name mt-3" style="text-align: center">John Smith</h4>
+                        <p class="designation" style="text-align: center">Software Engineer</p>
+                    </div>
+                </div>
+
+
+                <mat-divider></mat-divider>
+                <a routerLink="/admin" mat-button class="menu-button">
+                    <mat-icon>dashboard</mat-icon>
+                    <span>Dashboard</span>
+                </a>
+                <mat-divider></mat-divider>
+                <mat-accordion>
+
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>timeline</mat-icon> Categories
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-category">
+                            <mat-icon>add</mat-icon>Add Categories
+                        </a>
+                        <a mat-button routerLink="category-list">
+                            <mat-icon>list</mat-icon>All Categories
+                        </a>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>assessment</mat-icon> Courses
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>add</mat-icon>Add Courses
+                        </a>
+                        <a mat-button routerLink="course-list">
+                            <mat-icon>list</mat-icon>All Courses
+                        </a>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>people</mat-icon> Instructors
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>list</mat-icon>List
+                        </a>
+                        <a mat-button routerLink="list-courses">
+                            <mat-icon>payment</mat-icon>Payout
+                        </a>
+                        <a mat-button routerLink="list-courses">
+                            <mat-icon>tune</mat-icon>Settings
+                        </a>
+                    </mat-expansion-panel>
+                    <mat-divider></mat-divider>
+                    <a routerLink="/admin" mat-button class="menu-button">
+                        <mat-icon>article</mat-icon>
+                        <span>Students</span>
+                    </a>
+                    <mat-divider></mat-divider>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>subscriptions</mat-icon> Entrollments
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>history</mat-icon>History
+                        </a>
+                        <a mat-button routerLink="list-courses">
+                            <mat-icon>add</mat-icon>New Enrollment
+                        </a>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>analytics</mat-icon> Report
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>attach_money</mat-icon>Revenve
+                        </a>
+                    </mat-expansion-panel>
+                    <mat-divider></mat-divider>
+                    <a routerLink="/admin" mat-button class="menu-button">
+                        <mat-icon>chat</mat-icon>
+                        <span>Messages</span>
+                    </a>
+                    <mat-divider></mat-divider>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>assessment</mat-icon> Course Settings
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="list-course-type">
+                            <mat-icon>add</mat-icon>Course Types
+                        </a>
+                        <a mat-button routerLink="course-level-list">
+                            <mat-icon>list</mat-icon>Course Levels
+                        </a>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>settings</mat-icon>
+                                App Settings
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="languages-list">
+                            <mat-icon>settings_applications</mat-icon>Languages
+                        </a>
+                        <a mat-button routerLink="country-list">
+                            <mat-icon>settings_suggest</mat-icon>
+                            Countries
+                        </a>
+                        <a mat-button routerLink="state-list">
+                            <mat-icon>email</mat-icon>States
+                        </a>
+                        <a mat-button routerLink="city-list">
+                            <mat-icon>email</mat-icon>Cities
+                        </a>
+                    </mat-expansion-panel>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <mat-icon>settings</mat-icon>
+                                Settings
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>settings_applications</mat-icon>System Settings
+                        </a>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>settings_suggest</mat-icon>
+                            Web Settings
+                        </a>
+                        <a mat-button routerLink="add-course">
+                            <mat-icon>email</mat-icon>Smtp
+                        </a>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <mat-divider></mat-divider>
+
+                <button mat-button class="menu-button">
+                    <mat-icon>manage_accounts</mat-icon>
+                    <span>Manage Profile</span>
+                </button>
+                <button mat-button class="menu-button">
+                    <mat-icon>info</mat-icon>
+                    <span>About</span>
+                </button>
+
+
+            </div>
+        </perfect-scrollbar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <perfect-scrollbar *ngIf="type === 'component'" class="scroll-container" fxFlex="auto" [config]="config">
+            <!-- [scrollIndicators]="true" -->
+            <div class="scrollable-content">
+                <div class="content mat-elevation-z8">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </perfect-scrollbar>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>

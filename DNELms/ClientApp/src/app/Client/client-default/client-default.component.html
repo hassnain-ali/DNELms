@@ -1,0 +1,6 @@
+<mat-progress-bar mode="indeterminate" *ngIf="IsLoading"></mat-progress-bar>
+<mat-progress-bar mode="Determinate" [color]="color" *ngIf="!IsLoading" [value]="progresValue">
+</mat-progress-bar>
+<app-layout></app-layout>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

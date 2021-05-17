@@ -1,0 +1,9 @@
+.mat-progress-bar {
+    position: fixed !important;
+    z-index : 111111111111111111;
+    height  : 6px;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: white;
+}

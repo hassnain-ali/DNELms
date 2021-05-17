@@ -1,0 +1,101 @@
+mat-toolbar {
+    background: #c2185b;
+    color     : white;
+}
+
+/* #1e1e2d; */
+mat-sidenav {
+    margin          : 5px;
+    width           : 224px;
+    border-right    : none;
+    background      : #c2185b;
+    color           : white;
+    border-radius   : 10px;
+    padding         : 7px;
+    /* text-align   : center; */
+}
+
+.content {
+    /* height            : calc(100vh - 98px); */
+    border-radius        : 10px;
+    margin               : 16px;
+    /* margin-left       : 32px; */
+    /* display           : flex; */
+    justify-content      : center;
+    align-items          : center;
+    font-size            : 2rem;
+    color                : lightgray;
+    padding-top          : 12px;
+    padding-bottom       : 12px;
+}
+
+mat-sidenav-container {
+    height: calc(100vh - 64px);
+}
+
+@media only screen and (max-width: 600px) {
+    mat-sidenav-container {
+        height: calc(100vh - 56px) !important;
+    }
+}
+
+.menu-button {
+    width          : 100%;
+    display        : flex;
+    align-items    : center;
+    justify-content: flex-start;
+    font-size      : 1rem;
+}
+
+.menu-button mat-icon {
+    margin-right: 8px;
+}
+
+.avatar {
+    margin-top   : 16px;
+    width        : 50px;
+    border-radius: 50%;
+}
+
+.name {
+    margin-top : 8px;
+    font-weight: normal;
+}
+
+.designation {
+    margin-top: 2px;
+    font-size : 0.7rem;
+    color     : lightgrey;
+}
+
+mat-divider {
+    margin-top      : 16px;
+    margin-bottom   : 16px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.tool-title {
+    margin: 4px 3px 11px 24px;
+}
+
+mat-expansion-panel {
+    background-color: #c2185b;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.mat-expansion-panel-header {
+    padding: 0 17px;
+}
+
+mat-icon {
+    margin-right: 8px;
+}
+
+.mat-progress-bar {
+    position: fixed !important;
+    z-index : 111111111111111111;
+    height  : 6px;
+}

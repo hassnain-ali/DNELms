@@ -1,0 +1,54 @@
+<section class="category-header-area">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item">
+                            <a routerLink="/forgot">
+                                Forget Password </a>
+                        </li>
+                    </ol>
+                </nav>
+                <h1 class="category-name">
+                    Password Reset request </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="category-course-list-area">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="user-dashboard-content w-100 forgot-password-form">
+                    <div class="content-title-box">
+                        <div class="title">Forgot password</div>
+                        <div class="subtitle">Provide your email address to get password.</div>
+                    </div>
+                    <form method="post">
+                        <div class="content-box">
+                            <div class="basic-group">
+                                <div class="form-group">
+                                    <label for="forgot-email"><span class="input-field-icon"><i
+                                                class="fas fa-envelope"></i></span> Email:</label>
+                                    <input type="email" class="form-control" name="email" id="forgot-email"
+                                        placeholder="Email" value="" required>
+                                    <small class="form-text text-muted">Provide your email address to get
+                                        password.</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-update-box">
+                            <button type="submit" class="btn">Reset password</button>
+                        </div>
+                        <div class="forgot-pass text-center">
+                            Want to go back? <a routerLink="/login">Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
