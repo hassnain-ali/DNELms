@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DNELms.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -282,6 +283,7 @@ namespace DNELms.Dapper
             }
             return new List<T>();
         }
+
         public async Task<T> GetAsync<T>(string sp, DynamicParameters parms = null, CommandType commandType = CommandType.Text) where T : new()
         {
             try
@@ -306,6 +308,35 @@ namespace DNELms.Dapper
                 ErrorLog(ex, "GetAllAsync");
             }
             return new List<T>();
+        }
+
+
+
+        public async Task<IEnumerable<T>> SelectAsync<T>(string sp, PagingVM parms = default, bool hasActiveParam = true, bool? isActive = null, Dictionary<string, object> additional = null) where T : DTModel, new()
+        {
+            try
+            {
+                DynamicParameters @params = new();
+                @params.Add("DisplayLength", parms.DisplayLength, DbType.Int32);
+                @params.Add("DisplayStart", parms.DisplayStart, DbType.Int32);
+                @params.Add("SortCol", parms.SortCol?.ToLower(), DbType.String);
+                @params.Add("SortOrder", parms.SortOrder?.ToLower(), DbType.String);
+                @params.Add("Search", parms.Query, DbType.String);
+                if (hasActiveParam)
+                {
+                    @params.Add("Active", isActive, DbType.Boolean);
+                }
+                foreach (var item in additional??new()) 
+                {
+                    @params.Add(item.Key, item.Value);
+                }
+                return await SqlConnection.QueryAsync<T>(sp, @params, commandType: CommandType.StoredProcedure);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog(ex, "SelectAsync");
+            }
+            return Enumerable.Empty<T>();
         }
         #endregion
 
@@ -434,7 +465,7 @@ namespace DNELms.Dapper
             services.AddSingleton<ISQLFactory, SQLFactory>();
             return services;
         }
-        public static bool In(this object val,params object[] vals)
+        public static bool In(this object val, params object[] vals)
         {
             return vals.Contains(val);
         }

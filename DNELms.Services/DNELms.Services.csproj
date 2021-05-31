@@ -4,4 +4,17 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DNELms.Core\DNELms.Core.csproj" />
+    <ProjectReference Include="..\DNELms.Models\DNELms.Models.csproj" />
+  </ItemGroup>
+
 </Project>

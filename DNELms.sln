@@ -3,23 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms", "DNELms\DNELms.csproj", "{399037E5-D420-414E-BCCA-BB93A475543C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms", "DNELms\DNELms.csproj", "{399037E5-D420-414E-BCCA-BB93A475543C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.BAL", "DNELms.BAL\DNELms.BAL.csproj", "{A1207C46-15C3-4FA7-B66A-A1584A19DD5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.BAL", "DNELms.BAL\DNELms.BAL.csproj", "{A1207C46-15C3-4FA7-B66A-A1584A19DD5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.Dapper", "DNELms.Dapper\DNELms.Dapper.csproj", "{CD06071D-7E9A-461C-8D96-E58151012750}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.Dapper", "DNELms.Dapper\DNELms.Dapper.csproj", "{CD06071D-7E9A-461C-8D96-E58151012750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.DBContexts", "DNELms.DBContexts\DNELms.DBContexts.csproj", "{C5A4955E-00AC-4169-9BFC-7262421ED16B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.DBContexts", "DNELms.DBContexts\DNELms.DBContexts.csproj", "{C5A4955E-00AC-4169-9BFC-7262421ED16B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.Keys", "DNELms.Keys\DNELms.Keys.csproj", "{31962927-AAFB-44AD-9AC0-7EA7A1292AFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.Keys", "DNELms.Keys\DNELms.Keys.csproj", "{31962927-AAFB-44AD-9AC0-7EA7A1292AFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.Models", "DNELms.Models\DNELms.Models.csproj", "{1AA86E81-4E2D-4574-A26C-D41E4B60FD9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.Models", "DNELms.Models\DNELms.Models.csproj", "{1AA86E81-4E2D-4574-A26C-D41E4B60FD9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.ModelMapper", "DNELms.ModelMapper\DNELms.ModelMapper.csproj", "{2BB65EC0-8747-4237-8950-8A9B95508AAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.ModelMapper", "DNELms.ModelMapper\DNELms.ModelMapper.csproj", "{2BB65EC0-8747-4237-8950-8A9B95508AAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.WebFramework", "DNELms.WebFramework\DNELms.WebFramework.csproj", "{D7A48C64-D603-4EDE-AC57-0161C0FD8E5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.WebFramework", "DNELms.WebFramework\DNELms.WebFramework.csproj", "{D7A48C64-D603-4EDE-AC57-0161C0FD8E5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.Services", "DNELms.Services\DNELms.Services.csproj", "{AD499365-FD93-4668-A0AC-655660AE4F17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.Services", "DNELms.Services\DNELms.Services.csproj", "{AD499365-FD93-4668-A0AC-655660AE4F17}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNELms.Core", "DNELms.Core\DNELms.Core.csproj", "{A5C3BB76-378E-417E-A04C-54AD3757CBFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNELms.DataRepository", "DNELms.DataRepository\DNELms.DataRepository.csproj", "{F112AE9C-DE1D-4D8E-9BC6-1CDD0D185B1E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{AD499365-FD93-4668-A0AC-655660AE4F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD499365-FD93-4668-A0AC-655660AE4F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD499365-FD93-4668-A0AC-655660AE4F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5C3BB76-378E-417E-A04C-54AD3757CBFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5C3BB76-378E-417E-A04C-54AD3757CBFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5C3BB76-378E-417E-A04C-54AD3757CBFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5C3BB76-378E-417E-A04C-54AD3757CBFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F112AE9C-DE1D-4D8E-9BC6-1CDD0D185B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F112AE9C-DE1D-4D8E-9BC6-1CDD0D185B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F112AE9C-DE1D-4D8E-9BC6-1CDD0D185B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F112AE9C-DE1D-4D8E-9BC6-1CDD0D185B1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

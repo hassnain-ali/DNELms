@@ -10,33 +10,73 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DNELms.Dapper;
+using Microsoft.AspNetCore.Identity;
+using DNELms.ModelMappers;
+using DNELms.DBContexts.Data;
+using DNELms.DBContexts.NoSchoolContext;
+using DNELms.DBContexts.SchoolContext;
+using DNELms.BAL;
+using DNELms.Core.Infrastructure;
+using DNELms.Core;
+using Autofac;
+using DNELms.DataRepository;
+using Microsoft.OpenApi.Models;
 
 namespace DNELms
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        IEngine engine;
+        IWebHostEnvironment _webHostEnvironment { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IConfiguration Configuration { get; }
-
+        IServiceCollection services;
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            this.services = services;
+            #region DBContexts
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DNELmsContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<NoSchoolContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<SchoolContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            #endregion
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+            
+            #region Identity
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             var externalConfig = Configuration.GetSection("ExternalAuth").Get<ExternalAuth>();
             services.Configure<ApplicationUser>(Configuration.GetSection("ApplicationUser"));
             services.Configure<ExternalAuth>(Configuration.GetSection("ExternalAuth"));
+            #endregion
+
             #region Angular's
             services.AddIdentityServer()
                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
@@ -61,16 +101,39 @@ namespace DNELms
             }
             authBuilder.AddIdentityServerJwt();
             #endregion
+
+            #region Common
+
+            services.AddModelMapper();
             services.AddDapper();
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            var razor = services.AddRazorPages();
+#if DEBUG
+            razor.AddRazorRuntimeCompilation();
+#endif
+            services.AddDataRepositry();
+            services.AddDependencies();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-        }
+            #endregion
 
+            #region RegisterAutoFac/CoreFeatures
+            engine = EngineContext.Create();
+            CommonHelper.DefaultFileProvider = new DNEFileProvider(_webHostEnvironment.WebRootPath);
+            #endregion
+            services.AddSwaggerGen(c =>
+            {
+                c.CustomSchemaIds(type => type.ToString());
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "D.N.E LMS", Version = "v1" });
+            });
+        } 
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            engine.RegisterDependencies(builder, services.BuildServiceProvider());
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -78,6 +141,8 @@ namespace DNELms
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "D.N.E LMS v1"));
             }
             else
             {

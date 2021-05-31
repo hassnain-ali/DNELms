@@ -1,3 +1,4 @@
+using Autofac.Extensions.DependencyInjection;
 using DNELms.Keys;
 using DNELms.Models;
 using DNELms.Services;
@@ -19,15 +20,16 @@ namespace DNELms
         public async static Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
-            //using (IServiceScope services = host.Services.CreateScope())
-            //{
-            //    await CreateDefaults(services.ServiceProvider);
-            //}
+            using (IServiceScope services = host.Services.CreateScope())
+            {
+                await CreateDefaults(services.ServiceProvider);
+            }
             await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                       .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

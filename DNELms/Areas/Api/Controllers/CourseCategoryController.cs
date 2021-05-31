@@ -1,9 +1,11 @@
-﻿using DNELms.Areas.Api.Models;
-using DNELms.DBContexts.Data;
+﻿using DNELms.Model.NoSchoolModels;
+using DNELms.ModelMappers;
+using DNELms.Services;
+using Fyp.BAL.CategoriesRepo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace DNELms.Areas.Api.Controllers
@@ -12,58 +14,98 @@ namespace DNELms.Areas.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = AuthSchemes.AngularAppScheme)]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CourseCategoryController : ControllerBase
+    public class CourseCategoryController : BaseController
     {
-        readonly DNELmsContext context;
-        public CourseCategoryController(DNELmsContext _context)
+        readonly ICategoriesService context;
+        readonly IModelMapper mapper;
+        public CourseCategoryController(ICategoriesService repository, IModelMapper _mapper)
         {
-            context = _context;
+            context = repository;
+            mapper = _mapper;
         }
-        // GET: api/<CourseCategoryController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await context.CourseCategories.AsNoTracking().Include(s=>s.Courses).ToListAsync());
-        }
-
-        // GET api/<CourseCategoryController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(long id)
-        {
-            return Ok(new ApiResponseResult(await context.CourseCategories.FindAsync(id)));
-        }
-
-        // POST api/<CourseCategoryController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CourseCategory course)
-        {
-            await context.CourseCategories.AddAsync(course);
-            await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult(course));
-        }
-
-        // PUT api/<CourseCategoryController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody] CourseCategory course)
-        {
-            if (id != course.Id)
+            try
             {
-                var resp = new ApiResponseResult(course, StatusCodes.Status400BadRequest);
-                return BadRequest(resp);
+                var result = await context.Fetch(Request.FetchPaging());
+                return FetchOrOkApiResponse(MaterialTable(result));
             }
-            context.CourseCategories.Update(course);
-            await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult(course));
+            catch (Exception ex)
+            {
+                return ExceptionApiResponse(ex);
+            }
         }
 
-        // DELETE api/<CourseCategoryController>/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAsync(long id)
         {
-            context.CourseCategories.Remove(await context.CourseCategories.FindAsync(id));
-            await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult("", "Deleted SuccessFully"));
+            try
+            {
+                return FetchOrOkApiResponse(await context.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                return ExceptionApiResponse(ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromForm] CourseCategory courseCategory, [FromForm] IFormFile SmallImageFile = null, [FromForm] IFormFile BannerImageFile = null)
+        {
+            try
+            {
+                var userid = User.UserId();
+                //IFormFile SmallImageFile = GetFileByKey("SmallImage");
+                //IFormFile BannerImageFile = GetFileByKey("BannerImage");
+                courseCategory.CreatedBy = userid;
+                courseCategory.CreatedDate = DateTime.UtcNow;
+                return CreatedApiResponse(await context.Save(courseCategory, SmallImageFile, BannerImageFile));
+            }
+            catch (Exception ex)
+            {
+                return ExceptionApiResponse(ex);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(long id, [FromForm] CourseCategory courseCategory, [FromForm] IFormFile SmallImageFile = null, [FromForm] IFormFile BannerImageFile = null)
+        {
+            try
+            {
+                if (id != courseCategory.Id)
+                {
+                    return BadRequest();
+                }
+                var userid = User.UserId();
+                courseCategory.UpdatedBy = userid;
+                courseCategory.UpdatedDate = DateTime.UtcNow;
+                await context.Save(courseCategory, SmallImageFile, BannerImageFile);
+                return UpdatedApiResponse(courseCategory);
+            }
+            catch (Exception ex)
+            {
+                return ExceptionApiResponse(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(long id)
+        {
+            try
+            {
+                context.Delete(id);
+                return DeletedApiResponse("Deleted SuccessFully");
+            }
+            catch (Exception ex)
+            {
+                return ExceptionApiResponse(ex);
+            }
+        }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetDDL(long? id)
+        {
+            return FetchOrOkApiResponse(await context.GetSelectListAsync(id));
         }
     }
 }

@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: "add-banner", component: AddbannerComponent },
   { path: "banner-list", component: BannerlistComponent },
   { path: "add-category", component: AddcategoryComponent },
+  { path: "add-category/:id", component: AddcategoryComponent },
   { path: "category-list", component: CategorieslistComponent },
   { path: "add-assignment", component: AddassignmentComponent },
   { path: "add-course-level", component: AddcourselevelComponent },

@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders, Http
 import { Observable } from 'rxjs';
 import { AuthorizeService } from './authorize.service';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,29 +11,29 @@ import { catchError } from 'rxjs/operators';
 export class AuthorizeInterceptor implements HttpInterceptor {
   constructor(private authorize: AuthorizeService, private _router: Router) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return from(
-      this.authorize.getAccessToken()
-        .subscribe(token => {
-          const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-          const authRequest = req.clone({ headers });
-          return next.handle(authRequest)
-            .pipe(
-              catchError((err: any) => {
-                if (err && (err.status === 401 || err.status === 403)) {
-                  this._router.navigate(['/unauthorized']);
-                }
-                throw new Error(err);
-              })
-            ).toPromise();
-        })
-    );
+  //   return from(
+  //     this.authorize.getAccessToken()
+  //       .subscribe(token => {
+  //         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  //         const authRequest = req.clone({ headers });
+  //         return next.handle(authRequest)
+  //           .pipe(
+  //             catchError((err: any) => {
+  //               if (err && (err.status === 401 || err.status === 403)) {
+  //                 this._router.navigate(['/unauthorized']);
+  //               }
+  //               throw new Error(err);
+  //             })
+  //           ).toPromise();
+  //       })
+  //   );
+  // }
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return this.authorize.getAccessToken()
+      .pipe(mergeMap(token => this.processRequestWithToken(token, req, next)));
   }
-  //intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-  //  return this.authorize.getAccessToken()
-  //    .pipe(mergeMap(token => this.processRequestWithToken(token, req, next)));
-  //}
 
   // Checks if there is an access_token available in the authorize service
   // and adds it to the request in case it's targeted at the same origin as the
@@ -72,11 +72,3 @@ export class AuthorizeInterceptor implements HttpInterceptor {
     return false;
   }
 }
-function from(arg0: any): Observable<HttpEvent<any>> {
-  throw new Error('Function not implemented.');
-}
-
-function throwError() {
-  throw new Error('Function not implemented.');
-}
-

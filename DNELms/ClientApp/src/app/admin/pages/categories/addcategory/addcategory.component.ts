@@ -1,12 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHandler, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { FileInput } from 'ngx-material-file-input';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { Convert } from 'src/app/Common/Convert';
+import { RequestHandler } from 'src/app/Common/RequestHandler';
 import { SnackBarHandler } from 'src/app/Common/SnackBarHandler';
 import { ValidationMessages } from 'src/app/Common/Validations';
-import { Category } from 'src/app/Models/Category';
+import { Category, CategoryVM } from 'src/app/Models/Category';
 
 @Component({
   selector: 'app-addcategory',
@@ -15,43 +18,53 @@ import { Category } from 'src/app/Models/Category';
 })
 export class AddcategoryComponent implements OnInit {
   CategoryForm: FormGroup;
-  IsSubmitting: boolean = false;
+  IsBusy: boolean = false;
   snackBarHandler: SnackBarHandler;
-  Categries: string[] = [
-    'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
-    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-    'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-    'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania',
-    'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-  ];
-  constructor(_snackBar: MatSnackBar, private http: HttpClient,
-    @Inject("BASE_URL") private baseUrl: string,
-    private authService: AuthorizeService) {
+  progress: number
+  Categries: any[] = [];
+  constructor(_snackBar: MatSnackBar, private http: HttpClient, router: Router) {
     this.snackBarHandler = new SnackBarHandler(_snackBar);
     this.CategoryForm = this.NewForm();
-    // this.CategoryForm.controls.IsActive.setValue("true");
+    this.CategoryForm.controls.IsActive.setValue("true");
   }
 
   ngOnInit(): void {
+    this.IsBusy = true;
+    this.http.get('/api/CourseCategory/GetDDL/0').subscribe((s: any) => {
+      console.log(s);
+      this.Categries = s.Data.$values;
+      this.IsBusy = false;
+    });
   }
   SaveCategory(): void {
     if (this.CategoryForm.valid) {
-      let category: Category = this.CategoryForm.value;
-      this.IsSubmitting = true;
-      console.log(this.baseUrl);
-      this.authService.getAccessToken().subscribe(token => {
-        let headers = new HttpHeaders();
-        headers.set("Auhtorization", `Bearer ${token}`);
-        this.http.post(this.baseUrl + "/api/CourseCategory", category, { headers: headers }).subscribe(function (result) {
-          this.IsSubmitting = false;
-          this.snackBarHandler.Show("Category Saved Successfully");
+      var formData = Convert.toFormData(this.CategoryForm.value);
+      let BannerImage = Convert.toFile(this.CategoryForm.value.BannerImageFile);
+      let SmallImage = Convert.toFile(this.CategoryForm.value.SmallImageFile);
+      this.IsBusy = true;
+      if (BannerImage != null) {
+        formData.append("BannerImageFile", BannerImage);
+      }
+      if (SmallImage != null) {
+        formData.append("SmallImageFile", SmallImage);
+      }
+      this.http.post('api/CourseCategory', formData, { reportProgress: true }).subscribe((event: any) => {
+        console.log(event);
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round(100 * event.loaded / event.total);
+          console.log(this.progress);
+        } else if (event instanceof HttpResponse) {
+          console.log(event);
+        }
+        if (event.Success == true) {
           this.CleaForm();
-        });
+        }
+        this.IsBusy = false;
+      }, (error) => {
+        console.log(error);
       });
     } else {
-      this.IsSubmitting = false;
+      this.IsBusy = false;
     }
   }
   GetRequiredMessage(prop: FormControl): string {
@@ -62,13 +75,13 @@ export class AddcategoryComponent implements OnInit {
       Id: new FormControl(0, []),
       Name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       ParentId: new FormControl(0, []),
-      IsActive: new FormControl(true, []),
-      SmallImage: new FormControl(FileInput, []),
-      BannerImage: new FormControl(FileInput, [])
+      IsActive: new FormControl('', [Validators.required]),
+      SmallImageFile: new FormControl('', []),
+      BannerImageFile: new FormControl('', [])
     });
   }
   CleaForm(): void {
-    // this.CategoryForm.reset();
+    this.CategoryForm.reset();
   }
 }
 

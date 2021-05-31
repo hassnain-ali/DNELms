@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-declare var $: any
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import * as jq from 'jquery';
+declare var $: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
   slideConfig: any = {}
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
     this.slideConfig = {
       dots: false,
       infinite: false,
@@ -56,15 +55,23 @@ export class HomeComponent implements OnInit {
         }
       ]
     };
-    $('a.has-popover').webuiPopover({
-      trigger: 'hover',
-      placement: 'horizontal',
-      delay: {
-        show: 300,
-        hide: null
-      },
-      width: 335
-    });
+  }
+  ngAfterViewInit(): void {
+    init();
   }
 
+
+
+}
+function init() {
+
+  $('.has-popover').webuiPopover({
+    trigger: 'hover',
+    placement: 'horizontal',
+    delay: {
+      show: 300,
+      hide: null
+    },
+    width: 335
+  });
 }

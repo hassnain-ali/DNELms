@@ -31,13 +31,16 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
@@ -46,9 +49,11 @@ import { CourselistComponent } from './pages/courses/courselist/courselist.compo
 import { AddquizComponent } from './pages/courses/addquiz/addquiz.component';
 import { QuizlistComponent } from './pages/courses/quizlist/quizlist.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { SnackBarHandler } from '../Common/SnackBarHandler';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FileInputConfig, MaterialFileInputModule, NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
+import { MatSortModule } from '@angular/material/sort';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   wheelPropagation: true
 };
@@ -107,6 +112,9 @@ const config: FileInputConfig = {
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MaterialFileInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     {

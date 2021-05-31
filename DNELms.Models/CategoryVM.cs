@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 
 namespace DNELms.Model
@@ -8,10 +9,10 @@ namespace DNELms.Model
         public long Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public string SmallImage { get; set; }
-        public string BannerImage { get; set; }
+        //public IFormFile SmallImageFile { get; set; }
+        //public IFormFile BannerImageFile { get; set; }
         public long? ParentId { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }

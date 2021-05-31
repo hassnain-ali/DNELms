@@ -1,1 +1,79 @@
-<p>citieslist works!</p>
+<table mat-table [dataSource]="data" matSort matSortActive="CityName" matSortDisableClear matSortDirection="desc">
+    <!-- Number Column -->
+    <ng-container matColumnDef="CityName" mat-sort-header>
+        <th mat-header-cell *matHeaderCellDef>CityName</th>
+        <td mat-cell *matCellDef="let row">{{row.CityName}}</td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="StateName">
+        <th mat-header-cell *matHeaderCellDef>StateName</th>
+        <td mat-cell *matCellDef="let row">{{row.StateName}}</td>
+    </ng-container>
+
+    <!-- State Column -->
+    <ng-container matColumnDef="CountryName">
+        <th mat-header-cell *matHeaderCellDef>CountryName</th>
+        <td mat-cell *matCellDef="let row">{{row.CountryName}}</td>
+    </ng-container>
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="Logitude">
+        <th mat-header-cell *matHeaderCellDef>
+            Logitude
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.Logitude}}</td>
+    </ng-container>
+    <ng-container matColumnDef="Latitude">
+        <th mat-header-cell *matHeaderCellDef>
+            Latitude
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.Latitude}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
+
+
+<!-- <div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                Cities List
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+
+    <div *ngIf="loading;else table">
+        <mat-spinner class="center"></mat-spinner>
+    </div>
+
+    <ng-template #table>
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.CityId}} </td>
+
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.CityName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="age">
+                <th mat-header-cell *matHeaderCellDef> CountryName </th>
+                <td mat-cell *matCellDef="let element"> {{element.CountryName}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="['CityId', 'CityName', 'CountryName']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['CityId', 'CityName', 'CountryName'];"></tr>
+        </table>
+    </ng-template>
+    <mat-paginator [pageSizeOptions]="[20, 40, 80, 160, 320]" showFirstLastButtons>
+    </mat-paginator>
+</div> -->

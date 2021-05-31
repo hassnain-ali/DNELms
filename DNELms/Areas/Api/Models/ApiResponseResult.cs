@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace DNELms.Areas.Api.Models
 {
@@ -7,7 +8,7 @@ namespace DNELms.Areas.Api.Models
         public ApiResponseResult(dynamic data)
         {
             Data = data;
-            StatusCode = 200 | 201;
+            StatusCode = 200;
             Detail = "Processed Successfully";
             Success = true;
             Faulted = false;
@@ -15,7 +16,7 @@ namespace DNELms.Areas.Api.Models
         public ApiResponseResult(dynamic data, string message)
         {
             Data = data;
-            StatusCode = 200 | 201;
+            StatusCode = 200;
             Detail = message;
             Success = true;
             Faulted = false;
@@ -23,7 +24,7 @@ namespace DNELms.Areas.Api.Models
         public ApiResponseResult(dynamic data, bool isSuccess)
         {
             Data = data;
-            StatusCode = 200 | 201;
+            StatusCode = 200;
             Detail = "Processed Successfully";
             Success = isSuccess;
             Faulted = !isSuccess;
@@ -31,18 +32,18 @@ namespace DNELms.Areas.Api.Models
         public ApiResponseResult(dynamic data, int statusCode)
         {
             Data = data;
-            StatusCode = statusCode | 200;
+            StatusCode = statusCode;
             Detail = GetMessage(statusCode);
-            Success = true;
-            Faulted = false;
+            Success = statusCode is 200 or 201;
+            Faulted = statusCode is not 200 and 201;
         }
         public ApiResponseResult(dynamic data, int statusCode, string detail)
         {
             Data = data;
-            StatusCode = statusCode | 200;
+            StatusCode = statusCode;
             Detail = detail ?? GetMessage(statusCode);
-            Success = true;
-            Faulted = false;
+            Success = statusCode is 200 or 201;
+            Faulted = statusCode is not 200 and 201;
         }
         public dynamic Data { get; set; }
         public int StatusCode { get; set; }

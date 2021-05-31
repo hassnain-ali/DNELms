@@ -10,8 +10,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
           <ul class="mobile-header-buttons">
-            <li><a class="mobile-nav-trigger" routerLink="#mobile-primary-nav">Menu<span></span></a></li>
-            <li><a class="mobile-search-trigger" routerLink="#mobile-search">Search<span></span></a></li>
+            <li><a class="mobile-nav-trigger" href="#mobile-primary-nav">Menu<span></span></a></li>
+            <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
           </ul>
 
           <a routerLink="/admin" class="navbar-brand">
@@ -350,9 +350,8 @@
               <span class="number">0</span>
             </div>
 
-            <!-- Cart Dropdown goes here -->
             <div class="dropdown course-list-dropdown corner-triangle top-right" style="display: none;">
-              <!-- Just remove the display none from the css to make it work -->
+
               <div class="list-wrapper">
                 <div class="item-list">
                   <ul>
@@ -363,7 +362,7 @@
                     <span>Total:</span>
                     <div class="float-right">
                       <span class="current-price"></span>
-                      <!-- <span class="original-price">$94.99</span> -->
+                      <span class="original-price">$94.99</span> --
                     </div>
                   </div>
                   <a routerLink="/cart">Go to cart</a>
@@ -384,7 +383,8 @@
 
             <a routerLink="/authentication/register" class="btn btn-sign-in" *ngIf="!(isAuthenticated | async)">Sign
               up</a>
-            <!--<a [routerLink]='["/authentication/profile"]' class="btn btn-sign-in" *ngIf="isAuthenticated | async">{{ userName | async }}</a>-->
+            <a [routerLink]='["/authentication/profile"]' class="btn btn-sign-in" *ngIf="isAuthenticated | async">{{
+              userName | async }}</a>--
             <div class="user-box menu-icon-box" *ngIf="isAuthenticated | async">
               <div class="icon">
                 <a href="javascript::">
@@ -430,7 +430,7 @@
             </div>
             <a routerLink="/Buy-School" class="btn btn-sign-up" *ngIf="!(isAuthenticated | async)">Buy Academy</a>
 
-          </div> <!--  sign-in-box end -->
+          </div>
         </nav>
       </div>
     </div>

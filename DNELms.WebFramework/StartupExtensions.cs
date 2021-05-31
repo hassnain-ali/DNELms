@@ -9,11 +9,10 @@ namespace DNELms.WebFramework
 {
     public static class StartupExtensions
     {
-        public static IServiceCollection AddEmailSenders(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddEmailSenders(IServiceCollection services, IConfiguration config)
         {
             services.AddScoped((serviceProvider) =>
             {
-                var config = serviceProvider.GetRequiredService<IConfiguration>();
                 return new SmtpClient()
                 {
                     Host = config.GetValue<string>("Email:Smtp:Host"),

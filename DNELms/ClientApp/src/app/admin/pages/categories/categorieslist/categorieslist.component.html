@@ -1,1 +1,72 @@
-<p>categorieslist works!</p>
+<mat-card>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-card-title>
+                All Categories
+            </mat-card-title>
+        </div>
+
+        <div class="col-md-6">
+            <button mat-button mat-raised-button class="float-right" color="accent"
+                [routerLink]="['/admin/add-category']">
+                Create New
+            </button>
+        </div>
+    </div>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field class="float-right">
+                    <input matInput type="search" placeholder="search here" class="search-input full-length">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner color="accent" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+        <table #table matSort mat-table [dataSource]="entitiesDataSource" matSort
+            class="mat-elevation-z2 full-length table-hover">
+            <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> <a
+                        [routerLink]="['/admin/add-category/'+element.Id]">{{element.Name}}</a> </td>
+            </ng-container>
+            <ng-container matColumnDef="ParentName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.ParentName}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="IsActive">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Is Active </th>
+                <td mat-cell *matCellDef="let element">
+                    <span class="text-danger" *ngIf="element.IsActive==false">No</span>
+                    <span class="text-success" *ngIf="element.IsActive==true">Yes</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matMenuTriggerFor]="dropMenu">
+                        <mat-icon>tune</mat-icon>
+                    </button>
+                    <mat-menu #dropMenu="matMenu">
+                        <a mat-menu-item>
+                            <mat-icon class="mr">edit</mat-icon>
+                            Edit
+                        </a>
+                        <button mat-menu-item>8
+                            <mat-icon class="mr">delete_forever</mat-icon>
+                            Delete
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card-content>
+    <mat-card-content>
+        <mat-paginator #paginator [length]="resultsLength" [pageSize]="25" [pageSizeOptions]="[25, 60, 150]">
+        </mat-paginator>
+    </mat-card-content>
+</mat-card>

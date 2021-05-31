@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DNELms.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,5 +36,7 @@ namespace DNELms.Dapper
         Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null);
         Task<SqlMapper.GridReader> QueryMultipleAsync(string sql, CommandDefinition definition);
         T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure) where T : new();
+
+        Task<IEnumerable<T>> SelectAsync<T>(string sp, PagingVM parms = default, bool hasActiveParam = true, bool? isActive = null, Dictionary<string, object> additional = null) where T : DTModel, new();
     }
 }

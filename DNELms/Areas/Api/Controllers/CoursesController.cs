@@ -1,7 +1,5 @@
-﻿using DNELms.Areas.Api.Models;
-using DNELms.DBContexts.Data;
+﻿using DNELms.DBContexts.Data;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -14,7 +12,7 @@ namespace DNELms.Areas.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = AuthSchemes.AngularAppScheme)]
-    public class CoursesController : ControllerBase
+    public class CoursesController : BaseController
     {
         readonly DNELmsContext context;
         public CoursesController(DNELmsContext _context)
@@ -27,14 +25,14 @@ namespace DNELms.Areas.Api.Controllers
         {
             var courses = context.Courses.Include(s => s.Parent);
             var coursesList = await courses.ToListAsync();
-            return Ok(new ApiResponseResult(coursesList));
+            return Ok(coursesList);
         }
 
         // GET api/<CoursesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            return Ok(new ApiResponseResult(await context.Courses.Include(s => s.Parent).FirstOrDefaultAsync(s => s.Id == id)));
+            return Ok(await context.Courses.Include(s => s.Parent).FirstOrDefaultAsync(s => s.Id == id));
         }
 
         // POST api/<CoursesController>
@@ -43,7 +41,7 @@ namespace DNELms.Areas.Api.Controllers
         {
             await context.Courses.AddAsync(course);
             await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult(course));
+            return Ok(course);
         }
 
         // PUT api/<CoursesController>/5
@@ -52,12 +50,11 @@ namespace DNELms.Areas.Api.Controllers
         {
             if (id != course.Id)
             {
-                var resp = new ApiResponseResult(course, StatusCodes.Status400BadRequest);
-                return BadRequest(resp);
+                return BadRequest();
             }
             context.Courses.Update(course);
             await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult(course));
+            return Ok(course);
         }
 
         // DELETE api/<CoursesController>/5
@@ -66,7 +63,7 @@ namespace DNELms.Areas.Api.Controllers
         {
             context.Courses.Remove(await context.Courses.FindAsync(id));
             await context.SaveChangesAsync();
-            return Ok(new ApiResponseResult("", "Deleted SuccessFully"));
+            return Ok();
         }
     }
 }

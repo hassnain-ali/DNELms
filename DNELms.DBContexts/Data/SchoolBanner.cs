@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+
+#nullable disable
+
+namespace DNELms.DBContexts.Data
+{
+    public partial class SchoolBanner
+    {
+        public int Id { get; set; }
+        public string BannerTitle { get; set; }
+        public string BannerDesc { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
+        public string ImagePath { get; set; }
+    }
+}

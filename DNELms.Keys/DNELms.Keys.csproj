@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="linq2db.SqlServer" Version="3.3.0" />
+  </ItemGroup>
+
 </Project>

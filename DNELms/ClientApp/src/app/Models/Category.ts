@@ -1,10 +1,15 @@
-import { FileInput } from "ngx-material-file-input";
 
 export interface Category {
     Id: number,
-    IsActive: boolean,
+    IsActive: Boolean,
     Name: string,
-    BannerImage: FileInput,
-    SmallImage: FileInput,
+    BannerImage: File,
+    SmallImage: File,
+    ParentId: number
+}
+export interface CategoryVM {
+    Id: number,
+    IsActive: Boolean,
+    Name: string,
     ParentId: number
 }

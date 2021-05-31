@@ -8,7 +8,7 @@ namespace DNELms.Services
 {
     public static class EnumExtensions
     {
-        public static IEnumerable<SelectList> AsEnumerable<T>(this T @enum)
+        public static IEnumerable<SelectList> AsEnumerable<T>(this T @enum) where T : Enum
         {
             try
             {
@@ -20,16 +20,23 @@ namespace DNELms.Services
         }
         public static string GetDisplayValue<T>(T value)
         {
-            var fieldInfo = value.GetType().GetField(value.ToString());
+            try
+            {
+                var fieldInfo = value.GetType().GetField(value.ToString());
 
-            var descriptionAttributes = fieldInfo.GetCustomAttributes(
-                typeof(DisplayAttribute), false) as DisplayAttribute[];
+                var descriptionAttributes = fieldInfo.GetCustomAttributes(
+                    typeof(DisplayAttribute), false) as DisplayAttribute[];
 
-            if (descriptionAttributes[0].ResourceType != null)
-                return lookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Name);
+                if (descriptionAttributes[0].ResourceType != null)
+                    return lookupResource(descriptionAttributes[0].ResourceType, descriptionAttributes[0].Name);
 
-            if (descriptionAttributes == null) return string.Empty;
-            return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
+                if (descriptionAttributes == null) return string.Empty;
+                return (descriptionAttributes.Length > 0) ? descriptionAttributes[0].Name : value.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
         private static string lookupResource(Type resourceManagerProvider, string resourceKey)
         {

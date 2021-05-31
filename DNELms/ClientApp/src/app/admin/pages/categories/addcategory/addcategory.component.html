@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-xl-7">
-        <mat-progress-bar mode="query" *ngIf="IsSubmitting"></mat-progress-bar>
+        <mat-progress-bar mode="query" *ngIf="IsBusy"></mat-progress-bar>
         <mat-card>
             <mat-card-header>
                 <mat-card-title>
@@ -25,8 +25,9 @@
                         <mat-form-field class="full-length">
                             <mat-label>Parent Category</mat-label>
                             <mat-select formControlName="ParentId">
-                                <mat-option>None</mat-option>
-                                <mat-option *ngFor="let category of Categries" [value]="category">{{category}}
+                                <mat-option value=0>None</mat-option>
+                                <mat-option *ngFor="let category of Categries" [value]="category.Value">
+                                    {{category.Text}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -37,8 +38,8 @@
                         <mat-form-field class="full-length">
                             <mat-label>Published?</mat-label>
                             <mat-select formControlName="IsActive">
-                                <mat-option value="true">Yes! </mat-option>
-                                <mat-option value="false">No! </mat-option>
+                                <mat-option value=true>Yes! </mat-option>
+                                <mat-option value=false>No! </mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-error *ngIf="!CategoryForm.controls.IsActive.valid">
@@ -46,14 +47,15 @@
                     </div>
                     <div class="form-group">
                         <mat-form-field class="full-length">
-                            <ngx-mat-file-input formControlName="SmallImage" accept="image/*" placeholder="Thumbnail">
+                            <ngx-mat-file-input formControlName="SmallImageFile" accept="image/*"
+                                placeholder="Thumbnail">
                             </ngx-mat-file-input>
                             <mat-icon matSuffix>folder</mat-icon>
                         </mat-form-field>
                     </div>
                     <div class="form-group">
                         <mat-form-field class="full-length">
-                            <ngx-mat-file-input formControlName="BannerImage" accept="image/*"
+                            <ngx-mat-file-input formControlName="BannerImageFile" accept="image/*"
                                 placeholder="Large Image">
                             </ngx-mat-file-input>
                             <mat-icon matSuffix>folder</mat-icon>
@@ -62,20 +64,20 @@
                     <div class="form-group d-flex">
                         <div class="col">
                             <a type="submit" class="float-left" routerLink="/admin/category-list" mat-raised-button
-                                color="warn" *ngIf="!IsSubmitting">
+                                color="warn" *ngIf="!IsBusy">
                                 <mat-icon>arrow_back</mat-icon>
                                 <span> Back To List</span>
                             </a>
-                            <a type="submit" class="float-left" mat-raised-button color="warn" *ngIf="IsSubmitting"
-                                [disabled]="IsSubmitting">
+                            <a type="submit" class="float-left" mat-raised-button color="warn" *ngIf="IsBusy"
+                                [disabled]="IsBusy">
                                 <mat-icon>arrow_back</mat-icon>
                                 <span> Back To List</span>
                             </a>
                         </div>
                         <div class="col">
                             <button type="submit" class="float-right" mat-raised-button color="primary"
-                                [disabled]="!CategoryForm.valid||IsSubmitting">
-                                <mat-icon *ngIf="!IsSubmitting">done_all</mat-icon>
+                                [disabled]="!CategoryForm.valid||IsBusy">
+                                <mat-icon *ngIf="!IsBusy">done_all</mat-icon>
                                 Save
                             </button>
                         </div>
