@@ -202,9 +202,9 @@ namespace DNELms.DataRepository
         }
 
 
-        public void UpdateAsync(TEntity entity)
+        public Task<int> UpdateAsync(TEntity entity)
         {
-            _dataProvider.UpdateEntityAsync(entity);
+           return _dataProvider.UpdateEntityAsync(entity);
         }
 
         public void UpdateAsync(IEnumerable<TEntity> entities)

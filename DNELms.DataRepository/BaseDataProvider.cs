@@ -161,7 +161,7 @@ namespace DNELms.DataRepository
         /// </summary>
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        public Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public Task<int> UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
             using var dataContext = CreateDataConnection();
             return dataContext.UpdateAsync(entity);

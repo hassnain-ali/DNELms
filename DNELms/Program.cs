@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,16 +22,21 @@ namespace DNELms
         public async static Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
+            ILogger<Program> logger;
             using (IServiceScope services = host.Services.CreateScope())
             {
+                logger = services.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                logger.LogInformation("resolved Success");
                 await CreateDefaults(services.ServiceProvider);
+                logger.LogInformation("created default Success");
             }
+            logger.LogInformation("running");
             await host.RunAsync();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                       .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                  .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

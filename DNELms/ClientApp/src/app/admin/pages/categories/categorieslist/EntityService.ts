@@ -13,7 +13,7 @@ export class EntityService {
     constructor(
         private http: HttpClient) {
 
-        this.apiPrefix = 'https://localhost:44353/api/';
+      this.apiPrefix = window.location.origin + '/api/';
         this.apiEndpoint = this.apiPrefix + 'CourseCategory';
     }
 

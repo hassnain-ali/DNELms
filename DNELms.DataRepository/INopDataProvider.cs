@@ -50,7 +50,7 @@ namespace DNELms.DataRepository
         /// </summary>
         /// <param name="entity">Entity with data to update</param>
         /// <typeparam name="TEntity">Entity type</typeparam>
-        Task UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        Task<int> UpdateEntityAsync<TEntity>(TEntity entity) where TEntity : BaseEntity;
 
 
 

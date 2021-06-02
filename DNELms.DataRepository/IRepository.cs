@@ -73,7 +73,7 @@ namespace DNELms.DataRepository
         /// Update entity
         /// </summary>
         /// <param name="entity">Entity</param>
-        void UpdateAsync(TEntity entity);
+        Task<int> UpdateAsync(TEntity entity);
 
         /// <summary>
         /// Update entities

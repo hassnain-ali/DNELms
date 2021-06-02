@@ -56,8 +56,6 @@ namespace DNELms.Areas.Api.Controllers
             try
             {
                 var userid = User.UserId();
-                //IFormFile SmallImageFile = GetFileByKey("SmallImage");
-                //IFormFile BannerImageFile = GetFileByKey("BannerImage");
                 courseCategory.CreatedBy = userid;
                 courseCategory.CreatedDate = DateTime.UtcNow;
                 return CreatedApiResponse(await context.Save(courseCategory, SmallImageFile, BannerImageFile));

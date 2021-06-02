@@ -15,7 +15,7 @@ namespace DNELms.Keys
         /// <summary>
         /// Gets or sets the entity identifier
         /// </summary>
-        [PrimaryKey, Identity]
+        [PrimaryKey, Identity,SkipValuesOnInsert]
         public long Id { get; set; }
         /// <summary>
         /// Get key for caching the entity

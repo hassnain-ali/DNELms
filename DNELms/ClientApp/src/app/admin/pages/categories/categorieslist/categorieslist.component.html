@@ -29,7 +29,7 @@
             <ng-container matColumnDef="Name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
                 <td mat-cell *matCellDef="let element"> <a
-                        [routerLink]="['/admin/add-category/'+element.Id]">{{element.Name}}</a> </td>
+                        [routerLink]="['/admin/add-category/',element.Id]">{{element.Name}}</a> </td>
             </ng-container>
             <ng-container matColumnDef="ParentName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Parent Name </th>
@@ -50,11 +50,11 @@
                         <mat-icon>tune</mat-icon>
                     </button>
                     <mat-menu #dropMenu="matMenu">
-                        <a mat-menu-item>
+                        <a mat-menu-item [routerLink]="['/admin/add-category/',element.Id]">
                             <mat-icon class="mr">edit</mat-icon>
                             Edit
                         </a>
-                        <button mat-menu-item>8
+                        <button mat-menu-item>
                             <mat-icon class="mr">delete_forever</mat-icon>
                             Delete
                         </button>

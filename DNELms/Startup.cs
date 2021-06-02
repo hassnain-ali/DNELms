@@ -21,6 +21,9 @@ using DNELms.Core;
 using Autofac;
 using DNELms.DataRepository;
 using Microsoft.OpenApi.Models;
+using System.Diagnostics;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace DNELms
 {
@@ -45,6 +48,7 @@ namespace DNELms
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<DNELmsContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -80,7 +84,6 @@ namespace DNELms
             #region Angular's
             services.AddIdentityServer()
                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>()
-                 .AddDeveloperSigningCredential()
                  .AddProfileService<CustomProfileService>();
             var authBuilder = services.AddAuthentication();
             if (externalConfig.GoogleEnabled)
@@ -99,6 +102,7 @@ namespace DNELms
                     f.AppSecret = externalConfig.FaceBookAppSecret;
                 });
             }
+            
             authBuilder.AddIdentityServerJwt();
             #endregion
 
@@ -111,15 +115,16 @@ namespace DNELms
 #if DEBUG
             razor.AddRazorRuntimeCompilation();
 #endif
+         //   _logger.LogInformation("#if DEBUG");
             services.AddDataRepositry();
             services.AddDependencies();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "ClientApp/dist/DNELms";
             });
             #endregion
-
+     
             #region RegisterAutoFac/CoreFeatures
             engine = EngineContext.Create();
             CommonHelper.DefaultFileProvider = new DNEFileProvider(_webHostEnvironment.WebRootPath);
@@ -132,10 +137,10 @@ namespace DNELms
         } 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            engine.RegisterDependencies(builder, services.BuildServiceProvider());
+           engine.RegisterDependencies(builder, services.BuildServiceProvider());
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> _logger)
         {
             if (env.IsDevelopment())
             {
@@ -150,14 +155,14 @@ namespace DNELms
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            _logger.LogInformation("First con");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
-
+            _logger.LogInformation("2nd con");
             app.UseRouting();
 
             app.UseAuthentication();
@@ -179,7 +184,7 @@ namespace DNELms
                     pattern: "{area:exists}/{controller=Home}/{id?}");
                 endpoints.MapRazorPages();
             });
-
+            _logger.LogInformation("routing");
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -192,6 +197,7 @@ namespace DNELms
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+            _logger.LogInformation("spa");
         }
     }
 }

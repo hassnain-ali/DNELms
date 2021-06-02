@@ -1,15 +1,11 @@
-import { HttpClient, HttpEventType, HttpHandler, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { FileInput } from 'ngx-material-file-input';
-import { AuthorizeService } from 'src/api-authorization/authorize.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Convert } from 'src/app/Common/Convert';
-import { RequestHandler } from 'src/app/Common/RequestHandler';
 import { SnackBarHandler } from 'src/app/Common/SnackBarHandler';
 import { ValidationMessages } from 'src/app/Common/Validations';
-import { Category, CategoryVM } from 'src/app/Models/Category';
 
 @Component({
   selector: 'app-addcategory',
@@ -22,19 +18,21 @@ export class AddcategoryComponent implements OnInit {
   snackBarHandler: SnackBarHandler;
   progress: number
   Categries: any[] = [];
-  constructor(_snackBar: MatSnackBar, private http: HttpClient, router: Router) {
+  constructor(_snackBar: MatSnackBar,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute) {
     this.snackBarHandler = new SnackBarHandler(_snackBar);
     this.CategoryForm = this.NewForm();
-    this.CategoryForm.controls.IsActive.setValue("true");
+    //this.CategoryForm.controls.IsActive.setValue("true");
   }
 
   ngOnInit(): void {
     this.IsBusy = true;
-    this.http.get('/api/CourseCategory/GetDDL/0').subscribe((s: any) => {
-      console.log(s);
-      this.Categries = s.Data.$values;
-      this.IsBusy = false;
+    this.route.params.subscribe(s => {
+      this.SetById(s["id"]);
     });
+
   }
   SaveCategory(): void {
     if (this.CategoryForm.valid) {
@@ -48,18 +46,17 @@ export class AddcategoryComponent implements OnInit {
       if (SmallImage != null) {
         formData.append("SmallImageFile", SmallImage);
       }
-      this.http.post('api/CourseCategory', formData, { reportProgress: true }).subscribe((event: any) => {
-        console.log(event);
+      this.http.post('api/CourseCategory', formData, { reportProgress: true, observe: 'events' }).subscribe((event: any) => {
         if (event.type === HttpEventType.UploadProgress) {
           this.progress = Math.round(100 * event.loaded / event.total);
-          console.log(this.progress);
-        } else if (event instanceof HttpResponse) {
+        } else if (event.type === HttpEventType.Response) {
           console.log(event);
+          if (event.body.Success == true) {
+            this.CleaForm();
+            this.IsBusy = false;
+            this.router.navigateByUrl('/admin/add-category');
+          }
         }
-        if (event.Success == true) {
-          this.CleaForm();
-        }
-        this.IsBusy = false;
       }, (error) => {
         console.log(error);
       });
@@ -82,6 +79,27 @@ export class AddcategoryComponent implements OnInit {
   }
   CleaForm(): void {
     this.CategoryForm.reset();
+  }
+  SetById(id: number) {
+    this.IsBusy = true;
+    if (!isNaN(id) && id > 0) {
+      this.http.get('/api/CourseCategory/' + id).subscribe((s: any) => {
+        let data = s.Data;
+        this.PreBind(data.ParentId);
+        this.CategoryForm.controls.Id.setValue(data.Id);
+        this.CategoryForm.controls.Name.setValue(data.Name);
+        this.CategoryForm.controls.IsActive.setValue((<string>data.IsActive).toString());
+        this.CategoryForm.controls.ParentId.setValue((<number>data.ParentId).toString());
+      });
+    } else {
+      this.PreBind(0);
+    }
+  }
+  PreBind(id: number) {
+    this.http.get('/api/CourseCategory/GetDDL/' + id).subscribe((s: any) => {
+      this.Categries = s.Data.$values;
+      this.IsBusy = false;
+    });
   }
 }
 

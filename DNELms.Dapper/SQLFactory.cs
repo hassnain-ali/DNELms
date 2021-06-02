@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DNELms.Keys;
 using DNELms.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -147,6 +148,24 @@ namespace DNELms.Dapper
             {
                 ErrorLog(ex, "ExecuteProcedureGetScopeId");
                 return 0;
+            }
+        }
+        public async Task<T> UpdateEntityAsync<T>(string cmd, T obj) where T : BaseEntity, new()
+        {
+            try
+            {
+                DynamicParameters command = new();
+                foreach (PropertyInfo item in typeof(T).GetProperties())
+                {
+                    command.Add(("@" + item.Name), obj.GetType().GetProperty(item.Name).GetValue(obj));
+                }
+                await SqlConnection.QueryFirstAsync<int>(cmd, commandType: CommandType.StoredProcedure);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                ErrorLog(ex, "ExecuteProcedureGetScopeId");
+                return obj;
             }
         }
         #endregion

@@ -29,8 +29,9 @@ namespace Fyp.BAL.CategoriesRepo
             {
                 if (model.Id > 0)
                 {
-                    context.UpdateAsync(model);
-                    return Task.FromResult(model);
+                    return factory.UpdateEntityAsync($"update{nameof(CourseCategory)}",model);
+                    //Task<int> count = context.UpdateAsync(model);
+                   //model);
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using DNELms.Keys;
 using DNELms.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace DNELms.Dapper
         long ExecuteDeleteProc(string cmd);
         int ExecuteGetRows(string cmd, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null);
         int ExecuteGetRows(string cmd, CommandDefinition definition);
+        Task<T> UpdateEntityAsync<T>(string cmd, T obj) where T : BaseEntity, new();
         (bool, int) ExecuteProcedureGetScopeId(string cmd);
         (bool, int) ExecuteProcedureGetScopeId(string cmd, DynamicParameters command);
         int ExecuteProcedureGetScopeId<T>(string cmd, T obj, string[] toSkip) where T : new();
