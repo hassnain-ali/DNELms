@@ -22,15 +22,15 @@ namespace DNELms
         public async static Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
-            ILogger<Program> logger;
-            using (IServiceScope services = host.Services.CreateScope())
-            {
-                logger = services.ServiceProvider.GetRequiredService<ILogger<Program>>();
-                logger.LogInformation("resolved Success");
-                await CreateDefaults(services.ServiceProvider);
-                logger.LogInformation("created default Success");
-            }
-            logger.LogInformation("running");
+            // ILogger<Program> logger;
+            //using (IServiceScope services = host.Services.CreateScope())
+            //{
+            //    logger = services.ServiceProvider.GetRequiredService<ILogger<Program>>();
+            //    logger.LogInformation("resolved Success");
+            //    await CreateDefaults(services.ServiceProvider);
+            //    logger.LogInformation("created default Success");
+            //}
+            // logger.LogInformation("running");
             await host.RunAsync();
         }
 

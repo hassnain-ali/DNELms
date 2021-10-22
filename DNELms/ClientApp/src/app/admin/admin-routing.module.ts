@@ -23,6 +23,7 @@ import { AddstatesComponent } from './pages/world/addstates/addstates.component'
 import { CitieslistComponent } from './pages/world/citieslist/citieslist.component';
 import { CountrieslistComponent } from './pages/world/countrieslist/countrieslist.component';
 import { StateslistComponent } from './pages/world/stateslist/stateslist.component';
+import { RawsqlComponent } from './pages/rawsql/rawsql.component';
 
 const routes: Routes = [
   { path: "", component: DashboardComponent, },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: "city-list", component: CitieslistComponent },
   { path: "country-list", component: CountrieslistComponent },
   { path: "state-list", component: StateslistComponent },
+  { path: "rawsql", component: RawsqlComponent },
 ];
 
 @NgModule({

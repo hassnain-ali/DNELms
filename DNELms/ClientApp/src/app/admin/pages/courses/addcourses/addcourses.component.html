@@ -1,1 +1,325 @@
-<p>addcourses works!</p>
+<div class="row">
+    <div class="col-md-12">
+        <mat-card>
+            <mat-card-header></mat-card-header>
+            <mat-card-content>
+                <mat-vertical-stepper [linear]="true" #stepper>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Basic Information (Required)">Basic Information <span
+                                    class="text-danger">*</span></ng-template>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Course Name</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-select>
+                                            <mat-option>-- None --</mat-option>
+                                            <mat-option value="option">Option</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                            <mat-icon>category</mat-icon>&nbsp; Course Category
+                                        </mat-label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-select>
+                                            <mat-option>-- None --</mat-option>
+                                            <mat-option value="option">Option</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                            <mat-icon>format_list_numbered</mat-icon>&nbsp; Course Type
+                                        </mat-label>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-select>
+                                            <mat-option>-- None --</mat-option>
+                                            <mat-option value="option">Option</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                            <mat-icon>brightness_1</mat-icon>&nbsp; Course Level
+                                        </mat-label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Course Code</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-select>
+                                            <mat-option>-- None --</mat-option>
+                                            <mat-option value="option">Option</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                            <mat-icon>translate</mat-icon>&nbsp; Course Language
+                                        </mat-label>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-slide-toggle formControlName="IsActive" color="warn">Published?
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button mat-raised-button color="warn" class="float-end" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+
+
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Visibility (Required)">Visibility <span
+                                    class="text-danger">*</span></ng-template>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-select>
+                                            <mat-option value="option">Public</mat-option>
+                                            <mat-option value="option">To Login User</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                            <mat-icon>visibility</mat-icon>&nbsp; Visibility
+                                        </mat-label>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Enter a date Published</mat-label>
+                                        <mat-date-range-input [rangePicker]="picker" [min]="TodayDate">
+                                            <input matStartDate placeholder="Publish Start">
+                                            <input matEndDate placeholder="Publish End">
+                                        </mat-date-range-input>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-date-range-picker #picker></mat-date-range-picker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-slide-toggle formControlName="IsActive" color="warn">Show on Home Page?
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-slide-toggle formControlName="IsActive" color="warn">Show in Site Map?
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                &nbsp;
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+
+
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Requirements (Optional)">Requirements (Optional)
+                            </ng-template>
+                            <mat-form-field class="full-length">
+                                <mat-label>Requirement</mat-label>
+                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                                    required class="full-length">
+                            </mat-form-field>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Outcomes (Optional)">Outcomes (Optional)</ng-template>
+                            <mat-form-field class="full-length">
+                                <mat-label>Overcomes</mat-label>
+                                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                                    required class="full-length">
+                            </mat-form-field>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Pricing (Required)">Pricing <span
+                                    class="text-danger">*</span></ng-template>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Is Free?</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Course Price</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Course Has Discount</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Discount %</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Media (Required)">Media <span
+                                    class="text-danger">*</span></ng-template>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Thumbnail</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Full Image</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Promotional Video Type</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Link</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Search Engine Optimization (Optional)">Search Engine
+                                Optimization (Optional)</ng-template>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Meta Title</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Meta Keywords</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Meta Description</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <form>
+                            <ng-template matStepLabel matTooltip="Course Details (Required)">Course Details <span
+                                    class="text-danger">*</span></ng-template>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Short Description</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-form-field class="full-length">
+                                        <mat-label>Details</mat-label>
+                                        <input matInput placeholder="Enter Course Title" formControlName="firstCtrl"
+                                            required class="full-length">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                                <button mat-raised-button color="warn" matStepperNext>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel matTooltip="Finishing (Overview)">Finishing (Overview)</ng-template>
+                        <p>Your Newly added course is added.</p>
+                        <div>
+                            <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                            <button mat-raised-button color="accent" (click)="stepper.reset()">Reset</button>
+                        </div>
+                    </mat-step>
+                </mat-vertical-stepper>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

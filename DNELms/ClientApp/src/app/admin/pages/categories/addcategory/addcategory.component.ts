@@ -24,7 +24,7 @@ export class AddcategoryComponent implements OnInit {
     private route: ActivatedRoute) {
     this.snackBarHandler = new SnackBarHandler(_snackBar);
     this.CategoryForm = this.NewForm();
-    //this.CategoryForm.controls.IsActive.setValue("true");
+    this.CategoryForm.controls.IsActive.setValue("true");
   }
 
   ngOnInit(): void {
@@ -53,6 +53,7 @@ export class AddcategoryComponent implements OnInit {
           console.log(event);
           if (event.body.Success == true) {
             this.CleaForm();
+            this.snackBarHandler.Show('Category Saved Successfully.');
             this.IsBusy = false;
             this.router.navigateByUrl('/admin/add-category');
           }
@@ -78,14 +79,18 @@ export class AddcategoryComponent implements OnInit {
     });
   }
   CleaForm(): void {
+    let pId = this.CategoryForm.controls.ParentId.value;
     this.CategoryForm.reset();
+    this.CategoryForm.controls.IsActive.setValue("true");
+    this.CategoryForm.controls.Id.setValue(0);
+    this.CategoryForm.controls.ParentId.setValue(pId);
   }
   SetById(id: number) {
     this.IsBusy = true;
     if (!isNaN(id) && id > 0) {
       this.http.get('/api/CourseCategory/' + id).subscribe((s: any) => {
         let data = s.Data;
-        this.PreBind(data.ParentId);
+        this.PreBind(data.Id);
         this.CategoryForm.controls.Id.setValue(data.Id);
         this.CategoryForm.controls.Name.setValue(data.Name);
         this.CategoryForm.controls.IsActive.setValue((<string>data.IsActive).toString());

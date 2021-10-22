@@ -60,8 +60,8 @@ namespace DNELms.BAL.WorldRepo
         {
             try
             {
-                object query = paging.ToDBQuery();
-                return factory.GetAllAsync<CityVM_Result>("sp_GetCities", parms: query, commandType: CommandType.StoredProcedure);
+                //object query = paging.ToDBQuery();
+                return factory.SelectAsync<CityVM_Result>("sp_GetCities", parms: paging, hasActiveParam: false);
             }
             catch (Exception ex)
             {

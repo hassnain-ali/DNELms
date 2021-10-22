@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DNELms.Keys;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace DNELms.Models
         public string StateName { get; set; }
         public string CountryName { get; set; }
     }
-    public class DTModel
+    public class DTModel:BaseEntity
     {
         public int RowNo { get; set; }
         public int Total { get; set; }

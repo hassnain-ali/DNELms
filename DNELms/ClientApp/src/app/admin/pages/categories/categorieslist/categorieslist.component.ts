@@ -11,6 +11,7 @@ import { switchMap } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material/table';
 import { EntityService } from './EntityService';
 import { HttpClient } from '@angular/common/http';
+import { PagedEntityService } from 'src/app/admin/PagedEntityService';
 
 @Component({
   selector: 'app-categorieslist',
@@ -20,21 +21,26 @@ import { HttpClient } from '@angular/common/http';
 export class CategorieslistComponent implements AfterViewInit {
   entities: any[];
   entitiesDataSource: MatTableDataSource<any> = new MatTableDataSource();
-  displayedColumns = ['Name', 'ParentName', 'IsActive', "Actions"];
-  entityService: EntityService;
+  displayedColumns = ['RowNo', 'Name', 'ParentName', 'IsActive', "Actions"];
+  ;
   resultsLength = 0;
   isLoadingResults = false;
   isRateLimitReached = false;
+  filterValue: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  public constructor(http: HttpClient, private cdr: ChangeDetectorRef) {
-    this.entityService = new EntityService(http);
+  public constructor(http: HttpClient, private cdr: ChangeDetectorRef, private entityService: PagedEntityService) {
   }
 
   public ngAfterViewInit() {
-
+    this.PreBind();
+  }
+  Search() {
+    this.PreBind();
+  }
+  PreBind() {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     merge(this.sort.sortChange, this.paginator.page)
@@ -43,7 +49,7 @@ export class CategorieslistComponent implements AfterViewInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.entityService.fetchLatest(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex)
+            'CourseCategory', this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.filterValue)
             .pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
@@ -63,14 +69,5 @@ export class CategorieslistComponent implements AfterViewInit {
         })
       ).subscribe(data => this.entitiesDataSource.data = data);
     this.cdr.detectChanges();
-    // this.isLoadingResults = true;
-    // this.entityService.fetchLatest(this.sort.active, this.sort.direction,
-    //   this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe((res: any) => {
-    //     console.log(res);
-    //     this.isLoadingResults = false;
-    //     this.resultsLength = res.Data.total_count;
-    //     this.entitiesDataSource.data = res.Data.items.$values;
-    //   });
   }
-
 }

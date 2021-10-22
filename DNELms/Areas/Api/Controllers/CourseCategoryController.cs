@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using DNELms.Core;
 
 namespace DNELms.Areas.Api.Controllers
 {
@@ -17,11 +18,9 @@ namespace DNELms.Areas.Api.Controllers
     public class CourseCategoryController : BaseController
     {
         readonly ICategoriesService context;
-        readonly IModelMapper mapper;
-        public CourseCategoryController(ICategoriesService repository, IModelMapper _mapper)
+        public CourseCategoryController(ICategoriesService repository)
         {
             context = repository;
-            mapper = _mapper;
         }
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -29,6 +28,7 @@ namespace DNELms.Areas.Api.Controllers
             try
             {
                 var result = await context.Fetch(Request.FetchPaging());
+              
                 return FetchOrOkApiResponse(MaterialTable(result));
             }
             catch (Exception ex)
@@ -56,8 +56,16 @@ namespace DNELms.Areas.Api.Controllers
             try
             {
                 var userid = User.UserId();
-                courseCategory.CreatedBy = userid;
-                courseCategory.CreatedDate = DateTime.UtcNow;
+                if (courseCategory.Id > 0)
+                {
+                    courseCategory.UpdatedBy = userid;
+                    courseCategory.UpdatedDate = DateTime.UtcNow;
+                }
+                else
+                {
+                    courseCategory.CreatedBy = userid;
+                    courseCategory.CreatedDate = DateTime.UtcNow;
+                }
                 return CreatedApiResponse(await context.Save(courseCategory, SmallImageFile, BannerImageFile));
             }
             catch (Exception ex)

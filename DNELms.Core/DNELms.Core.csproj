@@ -13,4 +13,9 @@
     <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DNELms.ModelMapper\DNELms.ModelMapper.csproj" />
+    <ProjectReference Include="..\DNELms.Models\DNELms.Models.csproj" />
+  </ItemGroup>
+
 </Project>

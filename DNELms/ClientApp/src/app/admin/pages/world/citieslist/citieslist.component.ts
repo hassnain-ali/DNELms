@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { MatInput } from '@angular/material/input';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { PagedEntityService } from 'src/app/admin/PagedEntityService';
+import { CitiesService } from '../services/CitiesServices';
 
 @Component({
   selector: 'app-citieslist',
@@ -11,63 +15,59 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
   styleUrls: ['./citieslist.component.css']
 })
 export class CitieslistComponent implements AfterViewInit {
-  displayedColumns: string[] = ['CityName', 'StateName', 'CountryName', 'Logitude', 'Latitude'];
-  exampleDatabase: CitiesHttpDatabase | null;
-  data: any[] = [];
+  displayedColumns: string[] = ['RowNo', 'CityName', 'StateName', 'CountryName', 'Longitude', 'Latitude', 'Actions'];
+  entities: any[];
+  entitiesDataSource: MatTableDataSource<any> = new MatTableDataSource();
 
   resultsLength = 0;
-  isLoadingResults = true;
+  isLoadingResults = false;
   isRateLimitReached = false;
+  filterValue: string;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatInput) matInput: MatInput;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  constructor(private _httpClient: HttpClient) { }
+  public constructor(http: HttpClient, private cdr: ChangeDetectorRef, private entityService: PagedEntityService) {
+  }
 
   ngAfterViewInit() {
-    this.exampleDatabase = new CitiesHttpDatabase(this._httpClient);
+    this.BindTable();
+  }
+  SearchCity(val: string) {
+    this.BindTable();
+  }
+
+  BindTable() {
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page, this.matInput.stateChanges)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.entityService.fetchLatest(
+            'Cities', this.sort.active, this.sort.direction, this.paginator.pageIndex, this.paginator.pageSize, this.filterValue)
+            .pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
-          this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
+          this.isRateLimitReached = data === null;
 
-          return data.items;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
-          return observableOf([]);
+          if (data === null) {
+            return [];
+          }
+
+          // Only refresh the result length if there is new data. In case of rate
+          // limit errors, we do not want to reset the paginator to zero, as that
+          // would prevent users from re-triggering requests.
+          this.resultsLength = data.Data.total_count;
+          return data.Data.items.$values;
         })
-      ).subscribe(data => this.data = data);
+      ).subscribe(data => this.entitiesDataSource.data = data);
+    this.cdr.detectChanges();
   }
-}
 
-export class CitiesHttpDatabase {
-  constructor(private _httpClient: HttpClient) { }
-
-  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'api/Cities';
-    const requestUrl =
-      `${href}?q=&sort=${sort}&order=${order}&page=${page + 1}`;
-
-    return this._httpClient.get<GithubApi>(requestUrl);
-  }
-}
-export interface GithubApi {
-  items: any[];
-  total_count: number;
 }

@@ -2,6 +2,7 @@
 using DNELms.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #nullable disable
 
@@ -35,6 +36,5 @@ namespace DNELms.Model.NoSchoolModels
         public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
-
     }
 }

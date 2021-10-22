@@ -14,7 +14,7 @@
             <li><a class="mobile-search-trigger" href="#mobile-search">Search<span></span></a></li>
           </ul>
 
-          <a routerLink="/admin" class="navbar-brand">
+          <a routerLink="/" class="navbar-brand">
             <img src="https://cdn.sapvcpanel.com/uploads/system/logo-dark.png" alt="" height="35">
           </a>
 
@@ -383,8 +383,8 @@
 
             <a routerLink="/authentication/register" class="btn btn-sign-in" *ngIf="!(isAuthenticated | async)">Sign
               up</a>
-            <a [routerLink]='["/authentication/profile"]' class="btn btn-sign-in" *ngIf="isAuthenticated | async">{{
-              userName | async }}</a>--
+            <!-- <a [routerLink]='["/authentication/profile"]' class="btn btn-sign-in" *ngIf="isAuthenticated | async">{{
+              userName | async }}</a> -->
             <div class="user-box menu-icon-box" *ngIf="isAuthenticated | async">
               <div class="icon">
                 <a href="javascript::">

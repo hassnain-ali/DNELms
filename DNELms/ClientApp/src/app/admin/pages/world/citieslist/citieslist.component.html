@@ -1,79 +1,89 @@
-<table mat-table [dataSource]="data" matSort matSortActive="CityName" matSortDisableClear matSortDirection="desc">
-    <!-- Number Column -->
-    <ng-container matColumnDef="CityName" mat-sort-header>
-        <th mat-header-cell *matHeaderCellDef>CityName</th>
-        <td mat-cell *matCellDef="let row">{{row.CityName}}</td>
-    </ng-container>
-
-    <!-- Title Column -->
-    <ng-container matColumnDef="StateName">
-        <th mat-header-cell *matHeaderCellDef>StateName</th>
-        <td mat-cell *matCellDef="let row">{{row.StateName}}</td>
-    </ng-container>
-
-    <!-- State Column -->
-    <ng-container matColumnDef="CountryName">
-        <th mat-header-cell *matHeaderCellDef>CountryName</th>
-        <td mat-cell *matCellDef="let row">{{row.CountryName}}</td>
-    </ng-container>
-
-    <!-- Created Column -->
-    <ng-container matColumnDef="Logitude">
-        <th mat-header-cell *matHeaderCellDef>
-            Logitude
-        </th>
-        <td mat-cell *matCellDef="let row">{{row.Logitude}}</td>
-    </ng-container>
-    <ng-container matColumnDef="Latitude">
-        <th mat-header-cell *matHeaderCellDef>
-            Latitude
-        </th>
-        <td mat-cell *matCellDef="let row">{{row.Latitude}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>
-
-
-<!-- <div>
-    <mat-card>
-        <mat-card-header>
+<mat-card>
+    <div class="row">
+        <div class="col-md-6">
             <mat-card-title>
-                Cities List
+                All Cities
             </mat-card-title>
-        </mat-card-header>
-    </mat-card>
+        </div>
 
-    <div *ngIf="loading;else table">
-        <mat-spinner class="center"></mat-spinner>
+        <div class="col-md-6">
+            <button mat-button mat-raised-button class="float-right" color="accent" [routerLink]="['/admin/add-city']">
+                Create New
+            </button>
+        </div>
     </div>
-
-    <ng-template #table>
-        <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef> Id </th>
-                <td mat-cell *matCellDef="let element"> {{element.CityId}} </td>
-
+    <mat-card-content>
+        <div class="row">
+            <div class="col-sm-12">
+                <mat-form-field>
+                    <mat-label>Search Here</mat-label>
+                    <input matInput type="text" [(ngModel)]="filterValue" (blur)="SearchCity(filterValue)"
+                        placeholder="Search City name" class="full-length">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner color="accent" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+        <table #table matSort mat-table [dataSource]="entitiesDataSource" matSort
+            class="mat-elevation-z2 full-length table-hover">
+            <ng-container matColumnDef="RowNo">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let element"> {{element.RowNo}}</td>
             </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.CityName}} </td>
+            <ng-container matColumnDef="CityName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let element"> <a
+                        [routerLink]="['/admin/add-city/',element.CityId]">{{element.CityName}}</a> </td>
             </ng-container>
-
-            <ng-container matColumnDef="age">
-                <th mat-header-cell *matHeaderCellDef> CountryName </th>
-                <td mat-cell *matCellDef="let element"> {{element.CountryName}} </td>
+            <ng-container matColumnDef="StateName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> State Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.StateName}} </td>
             </ng-container>
-
-
-            <tr mat-header-row *matHeaderRowDef="['CityId', 'CityName', 'CountryName']"></tr>
-            <tr mat-row *matRowDef="let row; columns: ['CityId', 'CityName', 'CountryName'];"></tr>
+            <!-- Name Column -->
+            <ng-container matColumnDef="CountryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Country </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.CountryName}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Longitude">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Longitude </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.Longitude}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Latitude">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Latitude </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.Latitude}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matMenuTriggerFor]="dropMenu">
+                        <mat-icon>tune</mat-icon>
+                    </button>
+                    <mat-menu #dropMenu="matMenu">
+                        <a mat-menu-item [routerLink]="['/admin/add-category/',element.CityId]">
+                            <mat-icon class="mr">edit</mat-icon>
+                            Edit
+                        </a>
+                        <button mat-menu-item>
+                            <mat-icon class="mr">delete_forever</mat-icon>
+                            Delete
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-    </ng-template>
-    <mat-paginator [pageSizeOptions]="[20, 40, 80, 160, 320]" showFirstLastButtons>
-    </mat-paginator>
-</div> -->
+    </mat-card-content>
+    <mat-card-content>
+        <mat-paginator #paginator [length]="resultsLength" [pageSize]="90" [pageSizeOptions]="[90, 180, 320,640]"
+            showFirstLastButtons>
+        </mat-paginator>
+    </mat-card-content>
+</mat-card>

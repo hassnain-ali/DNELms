@@ -1,7 +1,9 @@
-﻿using DNELms.DBContexts.Data;
+﻿using DNELms.BAL.CoursesRepo;
+using DNELms.Model.NoSchoolModels;
+using DNELms.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,8 +16,8 @@ namespace DNELms.Areas.Api.Controllers
     [Authorize(AuthenticationSchemes = AuthSchemes.AngularAppScheme)]
     public class CoursesController : BaseController
     {
-        readonly DNELmsContext context;
-        public CoursesController(DNELmsContext _context)
+        readonly ICourseService context;
+        public CoursesController(ICourseService _context)
         {
             context = _context;
         }
@@ -23,46 +25,31 @@ namespace DNELms.Areas.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var courses = context.Courses.Include(s => s.Parent);
-            var coursesList = await courses.ToListAsync();
-            return Ok(coursesList);
+            return FetchOrOkApiResponse(await context.Fetch(Request.FetchPaging()));
         }
 
         // GET api/<CoursesController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(long id)
         {
-            return Ok(await context.Courses.Include(s => s.Parent).FirstOrDefaultAsync(s => s.Id == id));
+            return FetchOrOkApiResponse(await context.GetById(id));
         }
 
         // POST api/<CoursesController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Course course)
+        public async Task<IActionResult> Post([FromBody] CoursesVM course)
         {
-            await context.Courses.AddAsync(course);
-            await context.SaveChangesAsync();
-            return Ok(course);
+            IFormFile file = null;
+            IFormFile file1 = null;
+            return CreatedApiResponse(await context.SaveSteps(course, file, file1));
         }
 
-        // PUT api/<CoursesController>/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(long id, [FromBody] Course course)
-        {
-            if (id != course.Id)
-            {
-                return BadRequest();
-            }
-            context.Courses.Update(course);
-            await context.SaveChangesAsync();
-            return Ok(course);
-        }
 
         // DELETE api/<CoursesController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            context.Courses.Remove(await context.Courses.FindAsync(id));
-            await context.SaveChangesAsync();
+            await context.Delete(id);
             return Ok();
         }
     }

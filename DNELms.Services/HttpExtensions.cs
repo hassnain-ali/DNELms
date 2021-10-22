@@ -28,13 +28,13 @@ namespace DNELms.Services
                 string sort = query["sort"];
                 string filter = query["filter"];
                 int[] resultRange = JsonSerializer.Deserialize<int[]>(range);
-                //string filterData = Newtonsoft.Json.JsonConvert.DeserializeObject<string>(filter);
                 paging.DisplayStart = resultRange.FirstOrDefault();
                 paging.DisplayLength = resultRange.LastOrDefault();
+                paging.DisplayStart *= paging.DisplayLength;
                 string[] resultOrder = JsonSerializer.Deserialize<string[]>(sort);
-                paging.SortCol = resultOrder.First();
-                paging.SortOrder = resultOrder.Last();
-                //paging.Query = filterData;
+                paging.SortCol = resultOrder.FirstOrDefault();
+                paging.SortOrder = resultOrder.LastOrDefault();
+                paging.Query = filter;
                 return paging;
             }
             catch

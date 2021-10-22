@@ -155,19 +155,26 @@ namespace DNELms
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             _logger.LogInformation("First con");
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
+
             _logger.LogInformation("2nd con");
+
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseIdentityServer();
-            app.UseAuthorization();
+            app.UseAuthentication()
+            .UseIdentityServer()
+            .UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -185,6 +192,7 @@ namespace DNELms
                 endpoints.MapRazorPages();
             });
             _logger.LogInformation("routing");
+
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
@@ -194,7 +202,8 @@ namespace DNELms
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    //spa.UseAngularCliServer(npmScript: "start");
                 }
             });
             _logger.LogInformation("spa");

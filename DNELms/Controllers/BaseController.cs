@@ -4,6 +4,7 @@ using DNELms.Services;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text.Json;
 
 namespace Microsoft.AspNetCore.Mvc
@@ -53,6 +54,22 @@ namespace Microsoft.AspNetCore.Mvc
         protected IFormFile GetFileByKey(string key)
         {
             return Request.Form.Files[key];
+        }
+        protected IActionResult RawSqlResult(string query, IDataReader table)
+        {
+            string result = string.Empty;
+            DataTable dt = new();
+            List<string> columns = new();
+            if (table.RecordsAffected == -1)
+            {
+                dt.Load(table);
+                foreach (DataColumn item in dt.Columns)
+                {
+                    columns.Add(item.ColumnName);
+                }
+                result = Newtonsoft.Json.JsonConvert.SerializeObject(dt);
+            }
+            return Ok(new { Result = result, Query = query, table.RecordsAffected, Columns = columns });
         }
     }
 }

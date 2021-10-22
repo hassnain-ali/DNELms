@@ -1,5 +1,6 @@
 ﻿using DNELms.BAL.WorldRepo;
 using DNELms.Model.NoSchoolModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace DNELms.Areas.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = AuthSchemes.AngularAppScheme)]
     public class CountriesController : BaseController
     {
         readonly ICountriesService service;

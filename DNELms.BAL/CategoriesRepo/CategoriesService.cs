@@ -1,9 +1,8 @@
-﻿using DNELms.Dapper;
+﻿using DNELms.Core;
+using DNELms.Dapper;
 using DNELms.DataRepository;
 using DNELms.Model.NoSchoolModels;
-using DNELms.ModelMappers;
 using DNELms.Models;
-using LinqToDB;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -29,9 +28,10 @@ namespace Fyp.BAL.CategoriesRepo
             {
                 if (model.Id > 0)
                 {
-                    return factory.UpdateEntityAsync($"update{nameof(CourseCategory)}",model);
+
+                    return factory.UpdateEntityAsync($"update{nameof(CourseCategory)}", model);
                     //Task<int> count = context.UpdateAsync(model);
-                   //model);
+                    //model);
                 }
                 else
                 {
@@ -54,15 +54,23 @@ namespace Fyp.BAL.CategoriesRepo
                 return Task.FromException<CourseCategory>(ex);
             }
         }
-        public Task<IEnumerable<CourseCategoryVM>> Fetch(PagingVM paging)
+        public async Task<IEnumerable<CourseCategoryVM>> Fetch(PagingVM paging)
         {
             try
             {
-                return factory.SelectAsync<CourseCategoryVM>("CourseCategoryFetch", paging);
+                var result = await factory.SelectAsync<CourseCategoryVM>("CourseCategoryFetch", paging);
+                paging.DisplayLength = 5000;
+                paging.DisplayStart = 0;
+                var all = await factory.SelectAsync<CourseCategoryVM>("CourseCategoryFetch", paging);
+                foreach (var item in result)
+                {
+                    item.Name = item.GetFormattedBreadCrumb(all);
+                }
+                return result;
             }
-            catch (Exception ex)
+            catch
             {
-                return Task.FromException<IEnumerable<CourseCategoryVM>>(ex);
+                throw;
             }
         }
         public Task<bool> Delete(long id)
@@ -79,7 +87,13 @@ namespace Fyp.BAL.CategoriesRepo
         }
         public async Task<List<SelectListItem>> GetSelectListAsync(long? selected)
         {
-            var courseCategories = await Fetch(new(0));
+            var courseCategories = (await Fetch(new(0, 2000))).Where(s => s.Id != selected);
+            //    IEnumerable<CourseCategoryVM> allParents = courseCategories.Where(s => s.ParentId is null or 0);
+            //  IEnumerable<CourseCategoryVM> allChilds = courseCategories.Where(s => s.ParentId > 0);
+            foreach (var item in courseCategories)
+            {
+                item.Name = item.GetFormattedBreadCrumb(courseCategories); //= allChilds.Where(s => s.ParentId == item.Id);
+            }
             List<SelectListItem> list = new();
             foreach (var item in courseCategories)
             {

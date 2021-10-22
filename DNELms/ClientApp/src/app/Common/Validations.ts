@@ -9,7 +9,7 @@ export function ValidationMessages(prop: FormControl): string {
             return prop.errors?.minlength?.requiredLength + " Min length";
         }
         else if (prop.invalid && prop.hasError('maxlength')) {
-            return prop.errors?.maclength?.requiredLength + " Max length";
+            return prop.errors?.maxlength?.requiredLength + " Max length";
         }
         else if (prop.invalid && prop.hasError('email')) {
             return "Not a valid Email";

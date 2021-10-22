@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DNELms.Models\DNELms.Models.csproj" />
+    <ProjectReference Include="..\DNELms.Services\DNELms.Services.csproj" />
   </ItemGroup>
 
 </Project>

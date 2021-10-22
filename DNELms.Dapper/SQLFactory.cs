@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using DNELms.Keys;
 using DNELms.Models;
+using DNELms.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -159,7 +160,7 @@ namespace DNELms.Dapper
                 {
                     command.Add(("@" + item.Name), obj.GetType().GetProperty(item.Name).GetValue(obj));
                 }
-                await SqlConnection.QueryFirstAsync<int>(cmd, commandType: CommandType.StoredProcedure);
+                await SqlConnection.QueryFirstAsync<int>(cmd, param: command, commandType: CommandType.StoredProcedure);
                 return obj;
             }
             catch (Exception ex)
@@ -220,6 +221,15 @@ namespace DNELms.Dapper
                 ErrorLog(ex, "ExecuteGetRows");
                 return 0;
             }
+        }
+
+        public Task<int> ExecuteNonQuery(string query)
+        {
+            return SqlConnection.ExecuteAsync(new CommandDefinition(query));
+        }
+        public Task<IDataReader> ExecuteDataReader(string query)
+        {
+            return SqlConnection.ExecuteReaderAsync(new CommandDefinition(query));
         }
         #endregion
 
@@ -294,7 +304,7 @@ namespace DNELms.Dapper
         {
             try
             {
-                return (await SqlConnection.QueryAsync<T>(sp, parms, commandType: commandType));
+                return (await SqlConnection.QueryAsync<T>(sp, parms, commandTimeout: 500, commandType: commandType));
             }
             catch (Exception ex)
             {
@@ -345,11 +355,11 @@ namespace DNELms.Dapper
                 {
                     @params.Add("Active", isActive, DbType.Boolean);
                 }
-                foreach (var item in additional??new()) 
+                foreach (var item in additional ?? new())
                 {
                     @params.Add(item.Key, item.Value);
                 }
-                return await SqlConnection.QueryAsync<T>(sp, @params, commandType: CommandType.StoredProcedure);
+                return await SqlConnection.QueryAsync<T>(sp, @params, commandTimeout: 250, commandType: CommandType.StoredProcedure);
             }
             catch (Exception ex)
             {
@@ -360,19 +370,24 @@ namespace DNELms.Dapper
         #endregion
 
         #region Logs
-        public async void ErrorLog(Exception ex, string url)
+        public Task ErrorLog(Exception ex, string url)
         {
             try
             {
                 //OpenConnection();
-                string query = $"insertLog";
+                string query = $"insertErrorLog";
                 DynamicParameters command = new();
-                command.Add("@ShortMessage", ex.Message.Replace("'", "\""));
-                await SqlConnection.ExecuteAsync(query, param: command, commandType: CommandType.StoredProcedure);
+                command.Add("@Message", ex.Message.Replace("'", "\""));
+                command.Add("@IpAddress", accessor.HttpContext.Connection.RemoteIpAddress.ToString());
+                command.Add("@CreateDate", DateTime.UtcNow);
+                command.Add("@Url", url);
+                command.Add("@User_Id", accessor.HttpContext.User.UserId());
+                return SqlConnection.ExecuteAsync(query, param: command, commandType: CommandType.StoredProcedure);
             }
             catch (Exception exx)
             {
                 logger.LogError(exx, exx.InnerException?.Message ?? exx.Message, ex);
+                return Task.CompletedTask;
             }
         }
         public async Task ActivityLog(string comment)
@@ -387,41 +402,69 @@ namespace DNELms.Dapper
             }
             catch (Exception ex)
             {
-                ErrorLog(ex, "/SqlFactory/ErrorLog");
+                await ErrorLog(ex, "/SqlFactory/ErrorLog");
             }
         }
         #endregion
 
         #region Generic
-        public T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure) where T : new()
+        public async Task<T> Insert<T>(string sp, T model) where T : BaseEntity, new()
         {
-            T result;
             try
             {
-                result = SqlConnection.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                DynamicParameters command = new();
+                Type type = model.GetType();
+                foreach (PropertyInfo item in typeof(T).GetProperties().Where(s => s.Name != "Id"))
+                {
+                    command.Add(("@" + item.Name), type.GetProperty(item.Name).GetValue(model));
+                }
+                long id = await SqlConnection.QueryFirstAsync<long>(sp, command, commandType: CommandType.StoredProcedure);
+                model.Id = id;
+                return model;
             }
             catch (Exception ex)
             {
                 ErrorLog(ex, "Insert");
-                result = new T();
+                return new T();
             }
-
-            return result;
         }
 
-        public T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure) where T : new()
+        public async Task<T> Update<T>(string sp, T model) where T : BaseEntity, new()
         {
-            T result;
             try
             {
-                result = SqlConnection.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
+                DynamicParameters command = new();
+                Type type = model.GetType();
+                foreach (PropertyInfo item in typeof(T).GetProperties())
+                {
+                    command.Add(("@" + item.Name), type.GetProperty(item.Name).GetValue(model));
+                }
+                long id = await SqlConnection.QueryFirstAsync<long>(sp, command, commandType: CommandType.StoredProcedure);
+                model.Id = id;
+                return model;
             }
             catch (Exception ex)
             {
-                ErrorLog(ex, "Update");
-                result = new T();
+                await ErrorLog(ex, "Update");
+                return new T();
             }
-            return result;
+        }
+        public Task<T> GetByIdAsync<T>(long id, string tableName = "") where T : BaseEntity, new()
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(tableName))
+                {
+                    Type type = typeof(T);
+                    tableName = type.Name;
+                }
+                return SqlConnection.QueryFirstAsync<T>($"select * from {tableName} where {nameof(BaseEntity.Id)}=@id", new { id }, commandType: CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog(ex, "GetByIdAsync");
+                return Task.FromResult<T>(new());
+            }
         }
         #endregion
 

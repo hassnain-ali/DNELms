@@ -1,6 +1,8 @@
-﻿using DNELms.DataRepository;
+﻿using DNELms.Dapper;
+using DNELms.DataRepository;
 using DNELms.Model.NoSchoolModels;
 using DNELms.ModelMappers;
+using DNELms.Models;
 using LinqToDB;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -12,53 +14,59 @@ namespace DNELms.BAL.CoursesRepo
     public class CourseService : ICourseService
     {
         readonly IRepository<Courses> context;
+        readonly ISQLFactory factory;
         readonly IModelMapper mapper;
-        public CourseService(IRepository<Courses> _context, IModelMapper _mapper)
+        public CourseService(IRepository<Courses> _context, ISQLFactory _factory, IModelMapper _mapper)
         {
             context = _context;
-            mapper = _mapper;
+            factory = _factory;
+            _mapper = mapper;
         }
-        public Task<Courses> Save(Courses model, IFormFile smallImage, IFormFile largeImage)
+        public async Task<CoursesVM> SaveSteps(CoursesVM model, IFormFile smallImage, IFormFile largeImage)
         {
             try
             {
                 if (model.Id > 0)
                 {
-                    context.UpdateAsync(model);
-                    return Task.FromResult(model);
+                    Courses mapped = mapper.Map<CoursesVM, Courses>(model);
+                    Courses cc = await factory.UpdateEntityAsync("updateCourses", mapped);
+                    model.Id = cc.Id;
+                    return model;
                 }
                 else
                 {
-                    context.InsertAsync(model);
-                    return Task.FromResult(model);
+                    Courses mapped = mapper.Map<CoursesVM, Courses>(model);
+                    Courses cc = await factory.Insert("InsertCourses", mapped);
+                    model.Id = cc.Id;
+                    return model;
                 }
 
             }
             catch (Exception ex)
             {
-                return Task.FromResult<Courses>(new());
+                throw;
             }
         }
-        public Task<Courses> GetById(long id)
+        public Task<CoursesVM> GetById(long id)
         {
             try
             {
-                return context.GetByIdAsync(id);
+                return factory.GetByIdAsync<CoursesVM>(id, "Courses");
             }
             catch (Exception ex)
             {
-                return Task.FromResult(new Courses());
+                return Task.FromException<CoursesVM>(ex);
             }
         }
-        public Task<List<Courses>> Fetch()
+        public Task<IEnumerable<CoursesVM>> Fetch(PagingVM paging)
         {
             try
             {
-                return context.Table.ToListAsync();
+                return factory.SelectAsync<CoursesVM>("sp_GetCourses", paging);
             }
             catch (Exception ex)
             {
-                return Task.FromResult(new List<Courses>());
+                return Task.FromException<IEnumerable<CoursesVM>>(ex);
             }
         }
         public Task<bool> Delete(long id)

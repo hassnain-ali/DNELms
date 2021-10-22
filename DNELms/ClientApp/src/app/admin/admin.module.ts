@@ -31,6 +31,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -54,8 +57,15 @@ import { SnackBarHandler } from '../Common/SnackBarHandler';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { FileInputConfig, MaterialFileInputModule, NGX_MAT_FILE_INPUT_CONFIG } from 'ngx-material-file-input';
 import { MatSortModule } from '@angular/material/sort';
+import { RawsqlComponent } from './pages/rawsql/rawsql.component';
+import { PagedEntityService } from './PagedEntityService';
+import { HttpClient } from '@angular/common/http';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  wheelPropagation: true
+  wheelSpeed: 2,
+  wheelPropagation: true,
+  minScrollbarLength: 20
 };
 const config: FileInputConfig = {
   sizeUnit: 'Octet'
@@ -88,6 +98,7 @@ const config: FileInputConfig = {
     AddcourselevelComponent,
     AddcoursetypesComponent,
     AssignmentslistComponent,
+    RawsqlComponent,
   ],
   imports: [
     CommonModule,
@@ -115,6 +126,11 @@ const config: FileInputConfig = {
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatStepperModule,
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonToggleModule,
   ],
   providers: [
     {
@@ -122,7 +138,9 @@ const config: FileInputConfig = {
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { floatLabel: 'auto' } },
-    { provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: config }
-  ]
+    { provide: NGX_MAT_FILE_INPUT_CONFIG, useValue: config },
+    { provide: PagedEntityService, deps: [HttpClient] }
+  ],
+
 })
 export class AdminModule { }

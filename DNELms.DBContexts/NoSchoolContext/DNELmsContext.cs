@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
@@ -60,11 +59,14 @@ namespace DNELms.DBContexts.NoSchoolContext
         public virtual DbSet<UserCart> UserCarts { get; set; }
         public virtual DbSet<UserWishlist> UserWishlists { get; set; }
         public virtual DbSet<WebSetting> WebSettings { get; set; }
+        public virtual DbSet<CourseRequirements> CourseRequirements { get; set; }
+        public virtual DbSet<CourseOvercomes> CourseOvercomes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            { optionsBuilder.UseSqlServer("Server=.\\MYSQL;Database=DNELms;Trusted_Connection=True;");
+            {
+                optionsBuilder.UseSqlServer("Server=.\\MYSQL;Database=DNELms;Trusted_Connection=True;");
             }
         }
 
@@ -397,6 +399,16 @@ namespace DNELms.DBContexts.NoSchoolContext
                     .WithMany(p => p.InverseParent)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("FK_Courses_Courses1");
+            });
+
+            modelBuilder.Entity<CourseOvercomes>(e =>
+            {
+                
+            });
+            
+            modelBuilder.Entity<CourseRequirements>(e =>
+            {
+                
             });
 
             modelBuilder.Entity<CourseAssignment>(entity =>

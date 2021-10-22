@@ -20,6 +20,8 @@ namespace DNELms.DBContexts.NoSchoolContext
             StudentEnrolledCourses = new HashSet<StudentEnrolledCourse>();
             UserCarts = new HashSet<UserCart>();
             UserWishlists = new HashSet<UserWishlist>();
+            CourseRequirements = new HashSet<CourseRequirements>();
+            CourseOvercomes = new HashSet<CourseOvercomes>();
         }
 
         //public long Id { get; set; }
@@ -76,5 +78,7 @@ namespace DNELms.DBContexts.NoSchoolContext
         public virtual ICollection<StudentEnrolledCourse> StudentEnrolledCourses { get; set; }
         public virtual ICollection<UserCart> UserCarts { get; set; }
         public virtual ICollection<UserWishlist> UserWishlists { get; set; }
+        public virtual ICollection<CourseOvercomes> CourseOvercomes { get; set; }
+        public virtual ICollection<CourseRequirements> CourseRequirements { get; set; }
     }
 }
